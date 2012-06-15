@@ -1,5 +1,5 @@
-Javascript Pseudo 3D Racing
-===========================
+Javascript Pseudo 3D Racer
+==========================
 
 How to build an HTML5 Pseudo 3D Racing Game in 4 parts:
 
@@ -8,11 +8,11 @@ How to build an HTML5 Pseudo 3D Racing Game in 4 parts:
  * [Adding Hills](http://codeincomplete.com/experiment/racer/v3.hills.html)
  * [Adding Sprites and Collision Detection](http://codeincomplete.com/experiment/racer/v4.final.html)
 
-This is a work-in-progress (June 2012). I plan on writing up 'how to' articles on [codeincomplete.com](codeincomplete.com) over the
+This is a work-in-progress (June 2012). I plan on writing up 'how to' articles on [codeincomplete.com](http://codeincomplete.com) over the
 next week (or two, or three... you know that EURO2012 is on right now, so who knows?).
 
  * [play the game](http://codeincomplete.com/experiment/racer/v4.final.html)
- * view the [source](https://github.com/jakesgordon/javascript-racing)
+ * view the [source](https://github.com/jakesgordon/javascript-racer)
  * read about how it works (coming soon)
 
 A note on performance
