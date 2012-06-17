@@ -24,8 +24,8 @@
       <td>
         <select id="resolution" style="width:100%">
           <option value='fine'>Fine (1280x960)</option>
-          <option value='high'>High (1024x768)</option>
-          <option selected value='medium'>Medium (640x480)</option>
+          <option selected value='high'>High (1024x768)</option>
+          <option value='medium'>Medium (640x480)</option>
           <option value='low'>Low (480x360)</option>
         </select>
       </td>
@@ -86,13 +86,13 @@
 
     var fps           = 60;                      // how many 'update' frames per second
     var step          = 1/fps;                   // how long is each frame (in seconds)
-    var width         = 640;                     // logical canvas width
-    var height        = 480;                     // logical canvas height
+    var width         = 1024;                    // logical canvas width
+    var height        = 768;                     // logical canvas height
     var centrifugal   = 0.3;                     // centrifugal force multiplier when going around curves
     var offRoadDecel  = 0.99;                    // speed multiplier when off road (e.g. you lose 2% speed each update frame)
-    var skySpeed      = 0.0004;                   // background sky layer scroll speed when going around curve (or up hill)
-    var hillSpeed     = 0.0006;                   // background hill layer scroll speed when going around curve (or up hill)
-    var treeSpeed     = 0.0008;                   // background tree layer scroll speed when going around curve (or up hill)
+    var skySpeed      = 0.001;                   // background sky layer scroll speed when going around curve (or up hill)
+    var hillSpeed     = 0.002;                   // background hill layer scroll speed when going around curve (or up hill)
+    var treeSpeed     = 0.003;                   // background tree layer scroll speed when going around curve (or up hill)
     var skyOffset     = 0;                       // current sky scroll offset
     var hillOffset    = 0;                       // current hill scroll offset
     var treeOffset    = 0;                       // current tree scroll offset
@@ -111,7 +111,7 @@
     var fieldOfView   = 60;                      // angle (degrees) for field of view
     var cameraHeight  = 1000;                    // z height of camera
     var cameraDepth   = null;                    // z distance camera is from screen (computed)
-    var drawDistance  = 200;                     // number of segments to draw
+    var drawDistance  = 300;                     // number of segments to draw
     var playerX       = 0;                       // player x offset from center of road (-1 to 1 to stay independent of roadWidth)
     var playerZ       = null;                    // player relative z distance from camera (computed)
     var fogDensity    = 5;                       // exponential fog density
