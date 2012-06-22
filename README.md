@@ -65,6 +65,7 @@ If we were to try to turn it into a real game we would have to consider:
  * more bounce when car is off road
  * screen shake when off-road or collision
  * throw up dirt particles when off road
+ * more dynamic camera (lower at faster speed, swoop over hills etc)
  * automatic resolution & drawDistance detection
  * projection based curves ? x,y rotation
  * sub-pixel aliasing artifacts on curves

@@ -55,7 +55,7 @@
     </tr>
     <tr>
       <th><label for="fieldOfView">Field of View (<span id="currentFieldOfView"></span>) :</label></th>
-      <td><input id="fieldOfView" type='range' min='40' max='120' title="integer (40-120)"></td>
+      <td><input id="fieldOfView" type='range' min='80' max='140' title="integer (80-140)"></td>
     </tr>
     <tr>
       <th><label for="fogDensity">Fog Density (<span id="currentFogDensity"></span>) :</label></th>
@@ -115,7 +115,7 @@
     var rumbleLength   = 3;                       // number of segments per red/white rumble strip
     var trackLength    = null;                    // z length of entire track (computed)
     var lanes          = 3;                       // number of lanes
-    var fieldOfView    = 60;                      // angle (degrees) for field of view
+    var fieldOfView    = 100;                     // angle (degrees) for field of view
     var cameraHeight   = 1000;                    // z height of camera
     var cameraDepth    = null;                    // z distance camera is from screen (computed)
     var drawDistance   = 300;                     // number of segments to draw
@@ -639,7 +639,7 @@
       fieldOfView            = Util.toInt(options.fieldOfView,    fieldOfView);
       segmentLength          = Util.toInt(options.segmentLength,  segmentLength);
       rumbleLength           = Util.toInt(options.rumbleLength,   rumbleLength);
-      cameraDepth            = 1 / (2*Math.tan((fieldOfView/2) * Math.PI/180));
+      cameraDepth            = 1 / Math.tan((fieldOfView/2) * Math.PI/180);
       playerZ                = (cameraHeight * cameraDepth);
       resolution             = height/480;
       refreshTweakUI();
