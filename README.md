@@ -3,17 +3,17 @@ Javascript Pseudo 3D Racer
 
 How to build an HTML5 Pseudo 3D Racing Game in 4 parts:
 
- * [Straight Roads](http://codeincomplete.com/experiment/racer/v1.straight.html)
- * [Adding Curves](http://codeincomplete.com/experiment/racer/v2.curves.html)
- * [Adding Hills](http://codeincomplete.com/experiment/racer/v3.hills.html)
- * [Adding Sprites and Collision Detection](http://codeincomplete.com/experiment/racer/v4.final.html)
+ * [Straight Roads](http://codeincomplete.com/projects/racer/v1.straight.html)
+ * [Adding Curves](http://codeincomplete.com/projects/racer/v2.curves.html)
+ * [Adding Hills](http://codeincomplete.com/projects/racer/v3.hills.html)
+ * [Adding Sprites and Collision Detection](http://codeincomplete.com/projects/racer/v4.final.html)
 
 This is a work-in-progress (June 2012). I plan on writing up 'how to' articles on [codeincomplete.com](http://codeincomplete.com) over the
 next week (or two, or three... you know that EURO2012 is on right now, so who knows?).
 
- * [play the game](http://codeincomplete.com/experiment/racer/v4.final.html)
+ * [play the game](http://codeincomplete.com/projects/racer/v4.final.html)
  * view the [source](https://github.com/jakesgordon/javascript-racer)
- * read about how it works (coming soon)
+ * read about [how it works](http://codeincomplete.com/posts/2012/6/22/javascript_racer/)
 
 A note on performance
 =====================
@@ -51,7 +51,7 @@ FUTURE
 
 It's quite astounding what it takes to actually [finish](http://codeincomplete.com/posts/2011/9/21/defining_finished/)
 a game, even a simple one. And this is not a project that I plan on polishing into a finished state. It should
-really be considered just how to get started with a psuedo-3d racing game.
+really be considered just how to get started with a pseudo-3d racing game.
 
 If we were to try to turn it into a real game we would have to consider:
 
@@ -87,8 +87,8 @@ If we were to try to turn it into a real game we would have to consider:
 Related Links
 =============
 
- * http://www.gorenfeld.net/lou/pseudo/
- * http://10k.aneventapart.com/1/Uploads/198/
+ * [Lou's Pseudo-3d Page](http://www.gorenfeld.net/lou/pseudo/) - high level how-to guide
+ * [Racer 10k](http://10k.aneventapart.com/1/Entry/198) - another javascript racing game
 
 License
 =======
