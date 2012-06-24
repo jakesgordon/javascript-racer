@@ -14,6 +14,8 @@ Incrementally built up in 4 parts:
  * play the [hills demo](http://codeincomplete.com/projects/racer/v3.hills.html)
  * play the [final version](http://codeincomplete.com/projects/racer/v4.final.html)
 
+With detailed descriptions of how each part works:
+
  * read more about [v1 - straight roads](http://codeincomplete.com/posts/2012/6/23/javascript_racer_v1_straight)
  * read more about v2 - curves (coming soon)
  * read more about v3 - hills (coming soon)
