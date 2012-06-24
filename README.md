@@ -1,19 +1,23 @@
 Javascript Pseudo 3D Racer
 ==========================
 
-How to build an HTML5 Pseudo 3D Racing Game in 4 parts:
-
- * [Straight Roads](http://codeincomplete.com/projects/racer/v1.straight.html)
- * [Adding Curves](http://codeincomplete.com/projects/racer/v2.curves.html)
- * [Adding Hills](http://codeincomplete.com/projects/racer/v3.hills.html)
- * [Adding Sprites and Collision Detection](http://codeincomplete.com/projects/racer/v4.final.html)
-
-This is a work-in-progress (June 2012). I plan on writing up 'how to' articles on [codeincomplete.com](http://codeincomplete.com) over the
-next week (or two, or three... you know that EURO2012 is on right now, so who knows?).
+An Outrun-style pseudo-3d racing game in HTML5 and Javascript
 
  * [play the game](http://codeincomplete.com/projects/racer/v4.final.html)
  * view the [source](https://github.com/jakesgordon/javascript-racer)
  * read about [how it works](http://codeincomplete.com/posts/2012/6/22/javascript_racer/)
+
+Incrementally built up in 4 parts:
+
+ * play the [straight road demo](http://codeincomplete.com/projects/racer/v1.straight.html)
+ * play the [curves demo](http://codeincomplete.com/projects/racer/v2.curves.html)
+ * play the [hills demo](http://codeincomplete.com/projects/racer/v3.hills.html)
+ * play the [final version](http://codeincomplete.com/projects/racer/v4.final.html)
+
+ * read more about [v1 - straight roads](http://codeincomplete.com/posts/2012/6/23/javascript_racer_v1_straight)
+ * read more about v2 - curves (coming soon)
+ * read more about v3 - hills (coming soon)
+ * read more about v4 - final (coming soon)
 
 A note on performance
 =====================
