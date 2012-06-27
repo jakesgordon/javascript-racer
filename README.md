@@ -17,8 +17,8 @@ Incrementally built up in 4 parts:
 With detailed descriptions of how each part works:
 
  * read more about [v1 - straight roads](http://codeincomplete.com/posts/2012/6/23/javascript_racer_v1_straight)
- * read more about v2 - curves (coming soon)
- * read more about v3 - hills (coming soon)
+ * read more about [v2 - curves](http://codeincomplete.com/posts/2012/6/24/javascript_racer_v2_curves/)
+ * read more about [v3 - hills](http://codeincomplete.com/posts/2012/6/26/javascript_racer_v3_hills/)
  * read more about v4 - final (coming soon)
 
 A note on performance
