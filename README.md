@@ -93,8 +93,8 @@ If we were to try to turn it into a real game we would have to consider:
 Related Links
 =============
 
- * [Lou's Pseudo-3d Page](http://www.gorenfeld.net/lou/pseudo/) - high level how-to guide
- * [Racer 10k](http://10k.aneventapart.com/1/Entry/198) - another javascript racing game
+ * [Lou's Pseudo-3d Page](http://www.extentofthejam.com/pseudo/) - high level how-to guide
+ * [Racer 10k](https://github.com/onaluf/RacerJS) - another javascript racing game
 
 License
 =======
