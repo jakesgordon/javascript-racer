@@ -251,7 +251,7 @@ var Game = { // a modified version of the game loop from my previous boulderdash
       value.innerHTML = ok;
       value.style.color = color;
       msg.style.borderColor = color;
-    }, 5000);
+    }, 1000);
     return result;
   },
 
@@ -399,7 +399,7 @@ var Render = {
 //=============================================================================
 // RACING GAME CONSTANTS
 //=============================================================================
-
+// key binding 
 var KEY = {
   LEFT: 37,
   UP: 38,
@@ -413,17 +413,17 @@ var KEY = {
 
 var COLORS = {
   SKY: '#72D7EE',
-  TREE: '#005108',
-  FOG: '#005108',
+  TREE: '#c49435',
+  FOG: '#c49435',
   LIGHT: {
     road: '#6B6B6B',
-    grass: '#10AA10',
+    grass: '#f4cb42',
     rumble: '#555555',
     lane: '#CCCCCC'
   },
   DARK: {
     road: '#696969',
-    grass: '#009A00',
+    grass: '#c49435',
     rumble: '#BBBBBB'
   },
   START: {
@@ -441,7 +441,7 @@ var COLORS = {
 var BACKGROUND = {
   HILLS: {
     x: 5,
-    y: 5,
+    y: -35,
     w: 1280,
     h: 480
   },
@@ -460,11 +460,11 @@ var BACKGROUND = {
 };
 
 var SPRITES = {
-  PALM_TREE: {
-    x: 5,
-    y: 5,
-    w: 215,
-    h: 540
+  GREEN_BLDNG: {
+    x: -20,
+    y: 0,
+    w: 250,
+    h: 500
   },
   BILLBOARD08: {
     x: 230,
@@ -562,7 +562,6 @@ var SPRITES = {
     w: 240,
     h: 155
   },
-  // CACTUS:                 { x:  929, y:  897, w:  235, h:  118 },
   BUSH2: {
     x: 255,
     y: 1097,
@@ -664,5 +663,5 @@ var SPRITES = {
 SPRITES.SCALE = 0.3 * (1 / SPRITES.PLAYER_STRAIGHT.w) // the reference sprite width should be 1/3rd the (half-)roadWidth
 
 SPRITES.BILLBOARDS = [SPRITES.BILLBOARD01, SPRITES.BILLBOARD02, SPRITES.BILLBOARD03, SPRITES.BILLBOARD04, SPRITES.BILLBOARD05, SPRITES.BILLBOARD06, SPRITES.BILLBOARD07, SPRITES.BILLBOARD08, SPRITES.BILLBOARD09, SPRITES.STATA];
-SPRITES.PLANTS = [SPRITES.TREE1, SPRITES.TREE2, SPRITES.DEAD_TREE1, SPRITES.DEAD_TREE2, SPRITES.PALM_TREE, SPRITES.BUSH1, SPRITES.BUSH2, SPRITES.STUMP, SPRITES.BOULDER1, SPRITES.BOULDER3];
+SPRITES.PLANTS = [SPRITES.TREE1, SPRITES.TREE2, SPRITES.DEAD_TREE1, SPRITES.DEAD_TREE2, SPRITES.GREEN_BLDNG, SPRITES.BUSH1, SPRITES.BUSH2, SPRITES.STUMP, SPRITES.BOULDER1, SPRITES.BOULDER3];
 SPRITES.CARS = [SPRITES.CAR01, SPRITES.CAR02, SPRITES.CAR03, SPRITES.CAR04, SPRITES.SEMI, SPRITES.TRUCK];
