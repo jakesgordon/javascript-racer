@@ -57,6 +57,7 @@ function racer() {
     var difficultyCurrent = difficultyStart;    // Current difficulty (will be modified ingame)
     var timeIncrease = 10;                      // Amount of seconds (will be multiplied by difficultyCurrent) to give to the user everytime the finish line is crossed (raising this value will make the game easier)
     var remainingTimeThreshold = 20;      // When only this amount of time is left, the remaining time HUD will be highlighted (set to 0 to disable)
+    var gameOverFlag = false;                       // this flag will be set if game over was triggered
 
     var keyLeft        = false;
     var keyRight       = false;
@@ -97,19 +98,23 @@ function racer() {
 
       position = Util.increase(position, dt * speed, trackLength);
 
-      if (keyLeft)
-        playerX = playerX - dx;
-      else if (keyRight)
-        playerX = playerX + dx;
+      if (!gameOverFlag) {
+          if (keyLeft)
+            playerX = playerX - dx;
+          else if (keyRight)
+            playerX = playerX + dx;
+      }
 
       playerX = playerX - (dx * speedPercent * playerSegment.curve * centrifugal);
 
-      if (keyFaster)
-        speed = Util.accelerate(speed, accel, dt);
-      else if (keySlower)
-        speed = Util.accelerate(speed, breaking, dt);
-      else
-        speed = Util.accelerate(speed, decel, dt);
+      if (!gameOverFlag) {
+          if (keyFaster)
+            speed = Util.accelerate(speed, accel, dt);
+          else if (keySlower)
+            speed = Util.accelerate(speed, breaking, dt);
+          else
+            speed = Util.accelerate(speed, decel, dt);
+      }
 
 
       if ((playerX < -1) || (playerX > 1)) {
@@ -192,12 +197,21 @@ function racer() {
         } else {
           // Else we are not yet at the finish line, we increase the time/decrease remaining time
           currentLapTime += dt;
-          remainingTime -= dt;
+          if (remainingTime > 0) {
+            remainingTime -= dt;
+          } else {
+            remainingTime = 0;
+          }
 
           // Highlight remaining time if quite low
           if (remainingTime < remainingTimeThreshold) {
             Dom.removeClassName('remaining_time_value', 'value');
             Dom.addClassName('remaining_time_value', 'warninglow');
+          }
+
+          // Call game over if conditions are met
+          if ((gamemode == 1) & (remainingTime <= 0)) { // gamemode out of time and no remaining time left
+            gameOverFlag = true;
           }
         }
       }
@@ -376,25 +390,34 @@ function racer() {
         }
       }
 			
-        // start horizon tilt
-        if (enableTilt) {
-            rotation=0;
-            if (baseSegment.curve==0) {
-                rotation=-currentRotation;
-                currentRotation=0;
-            } else {
-                newrot = Math.round(baseSegment.curve*speed/maxSpeed*100)/100;
-                rotation=newrot - currentRotation ;
-                currentRotation = newrot ;
-            }
-            if (rotation!=0) {
-                //ctx.save(); // doesn't help with moire problem
-                ctx.translate(canvas.width/2,canvas.height/2);
-                ctx.rotate(-rotation*(Math.PI/90));
-                ctx.translate(-canvas.width/2,-canvas.height/2);
-                //ctx.restore();
-            }
+      // start horizon tilt
+      if (enableTilt) {
+        rotation=0;
+        if (baseSegment.curve==0) {
+            rotation=-currentRotation;
+            currentRotation=0;
+        } else {
+            newrot = Math.round(baseSegment.curve*speed/maxSpeed*100)/100;
+            rotation=newrot - currentRotation ;
+            currentRotation = newrot ;
         }
+        if (rotation!=0) {
+            //ctx.save(); // doesn't help with moire problem
+            ctx.translate(canvas.width/2,canvas.height/2);
+            ctx.rotate(-rotation*(Math.PI/90));
+            ctx.translate(-canvas.width/2,-canvas.height/2);
+            //ctx.restore();
+        }
+      }
+
+      // Draw "Game Over" screen
+      if (gameOverFlag) {
+          ctx.font = "3em Arial";
+          ctx.fillStyle = "magenta";
+          ctx.textAlign = "center";
+          ctx.fillText("GAME OVER", canvas.width/2, canvas.height/2);
+          ctx.fillText("(refresh to restart)", canvas.width/2, canvas.height/1.5);
+      }
     }
 
     function findSegment(z) {
