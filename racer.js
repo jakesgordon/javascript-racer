@@ -127,9 +127,12 @@ function racer() {
       treeOffset = Util.increase(treeOffset, treeSpeed * playerSegment.curve * (position-startPosition)/segmentLength, 1);
 
       if (position > playerZ) {
-        if (currentLapTime && (startPosition < playerZ)) {
+        if (currentLapTime && (startPosition < playerZ)) { // arrived at finish line, update last lap time + generate new track if enabled
           lastLapTime    = currentLapTime;
           currentLapTime = 0;
+          if (randomTrack) { // generate procedurally a new track when arriving at the finish line
+            resetRoad(randomTrack, randomTrackLength);
+          }
           if (lastLapTime <= Util.toFloat(Dom.storage.fast_lap_time)) {
             Dom.storage.fast_lap_time = lastLapTime;
             updateHud('fast_lap_time', formatTime(lastLapTime));
@@ -439,7 +442,7 @@ function racer() {
       addRoad(num, num, num, -ROAD.CURVE.EASY, -lastY()/segmentLength);
     }
 
-    function resetRoad(random, tracklength) {
+    function resetRoad(random, mintracklength) {
       segments = [];
 
       random = true;
@@ -447,16 +450,16 @@ function racer() {
         // Build the list of possible constructs
         var constructs = ['straight', 'scurves', 'curve', 'bumps', 'hill', 'lowrollinghills'];
         // Minimum track length needs to be 2 (between start and end), else it will fail
-        if (!tracklength) {
-            tracklength = 2;
+        if (!mintracklength) {
+            mintracklength = 2;
         }
 
         // Build start part of the track
-        addStraight(ROAD.LENGTH.SHORT);
+        addStraight(ROAD.LENGTH.LONG); // use a long road length to hide the regeneration of the next track when arriving at finish line. TODO: fix this by preloading in parallel the new track, and when riding the last construct before the finish line, modify the rendering functions to render the new track
 
         // Procedurally and randomly build the rest of the track
         i = -1;
-        while ((i+=1) < tracklength) { // TODO: sometimes, 2 tracks are not enough and the loading fails, try to find out why? (there must be an incompatibility between constructs somewhere)
+        while ((i+=1) < mintracklength) { // TODO: sometimes, 2 tracks are not enough and the loading fails, try to find out why? (there must be an incompatibility between constructs somewhere)
             // Pick randomly a construct
             var randc = constructs[Math.floor(Math.random() * constructs.length)];
             if (randc == 'straight') {
@@ -508,8 +511,8 @@ function racer() {
           addDownhillToEnd();
       }
 
-      resetSprites();
-      resetCars();
+      resetSprites(); // reset (or create) the environmental sprites
+      //resetCars(); // don't necessarily reset cars, if we generate procedurally we just want the cars to continue
 
       segments[findSegment(playerZ).index + 2].color = COLORS.START;
       segments[findSegment(playerZ).index + 3].color = COLORS.START;
@@ -626,6 +629,7 @@ function racer() {
 
       if ((segments.length==0) || (options.segmentLength) || (options.rumbleLength))
         resetRoad(randomTrack, randomTrackLength); // only rebuild road when necessary
+        resetCars();
     }
 
     //=========================================================================
