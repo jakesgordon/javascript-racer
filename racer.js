@@ -39,11 +39,13 @@ function racer() {
     var decel          = -maxSpeed/5;             // 'natural' deceleration rate when neither accelerating, nor braking
     var offRoadDecel   = -maxSpeed/2;             // off road deceleration is somewhere in between
     var offRoadLimit   =  maxSpeed/4;             // limit when off road deceleration no longer applies (e.g. you can always go at least this speed even when off road)
-    var totalCars      = 200;                     // total number of cars on the road
+    var totalCars      = 20;                     // total number of cars on the road
     var currentLapTime = 0;                       // current lap time
     var lastLapTime    = null;                    // last lap time
     var enableTilt = false;                          // enable horizon tilt
-    var currentRotation =0;                     // horizon tilt initialization
+    var currentRotation = 0;                     // horizon tilt initialization
+    var randomTrack = true;                     // enable random procedural generation of the track
+    var randomTrackLength = 5;                  // if random track is enable, how many track segments/constructs to build?
 
     var keyLeft        = false;
     var keyRight       = false;
@@ -437,27 +439,74 @@ function racer() {
       addRoad(num, num, num, -ROAD.CURVE.EASY, -lastY()/segmentLength);
     }
 
-    function resetRoad() {
+    function resetRoad(random, tracklength) {
       segments = [];
 
-      addStraight(ROAD.LENGTH.SHORT);
-      addLowRollingHills();
-      addSCurves();
-      addCurve(ROAD.LENGTH.MEDIUM, ROAD.CURVE.MEDIUM, ROAD.HILL.LOW);
-      addBumps();
-      addLowRollingHills();
-      addCurve(ROAD.LENGTH.LONG*2, ROAD.CURVE.MEDIUM, ROAD.HILL.MEDIUM);
-      addStraight();
-      addHill(ROAD.LENGTH.MEDIUM, ROAD.HILL.HIGH);
-      addSCurves();
-      addCurve(ROAD.LENGTH.LONG, -ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
-      addHill(ROAD.LENGTH.LONG, ROAD.HILL.HIGH);
-      addCurve(ROAD.LENGTH.LONG, ROAD.CURVE.MEDIUM, -ROAD.HILL.LOW);
-      addBumps();
-      addHill(ROAD.LENGTH.LONG, -ROAD.HILL.MEDIUM);
-      addStraight();
-      addSCurves();
-      addDownhillToEnd();
+      random = true;
+      if (random==true) {
+        // Build the list of possible constructs
+        var constructs = ['straight', 'scurves', 'curve', 'bumps', 'hill', 'lowrollinghills'];
+        // Minimum track length needs to be 2 (between start and end), else it will fail
+        if (!tracklength) {
+            tracklength = 2;
+        }
+
+        // Build start part of the track
+        addStraight(ROAD.LENGTH.SHORT);
+
+        // Procedurally and randomly build the rest of the track
+        i = -1;
+        while ((i+=1) < tracklength) { // TODO: sometimes, 2 tracks are not enough and the loading fails, try to find out why? (there must be an incompatibility between constructs somewhere)
+            // Pick randomly a construct
+            var randc = constructs[Math.floor(Math.random() * constructs.length)];
+            if (randc == 'straight') {
+                var posvals = [ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG, null];
+                var randval = posvals[Math.floor(Math.random() * posvals.length)];
+                addStraight(randval);
+            } else if (randc == 'scurves') {
+                addSCurves();
+            } else if (randc == 'curve') {
+                var posroad = [ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG];
+                var randroad = posroad[Math.floor(Math.random() * posroad.length)];
+                var poscurve = [ROAD.CURVE.SHORT, ROAD.CURVE.MEDIUM, ROAD.CURVE.LONG];
+                var randcurve = poscurve[Math.floor(Math.random() * poscurve.length)];
+                var poshill = [ROAD.HILL.LOW, ROAD.HILL.MEDIUM, ROAD.HILL.HIGH];
+                var randhill = poshill[Math.floor(Math.random() * poshill.length)];
+                addCurve(randroad, randcurve, randhill);
+            } else if (randc == 'bumps') {
+                addBumps();
+            } else if (randc == 'hill') {
+                var posroad = [ROAD.LENGTH.SHORT, ROAD.LENGTH.MEDIUM, ROAD.LENGTH.LONG];
+                var randroad = posroad[Math.floor(Math.random() * posroad.length)];
+                var poshill = [ROAD.HILL.LOW, ROAD.HILL.MEDIUM, ROAD.HILL.HIGH];
+                var randhill = poshill[Math.floor(Math.random() * poshill.length)];
+                addHill(randroad, randhill);
+            } else if (randc == 'curve') {
+                addLowRollingHills();
+            }
+        }
+        // Build end part of the track
+        addDownhillToEnd();
+      } else {
+          addStraight(ROAD.LENGTH.SHORT);
+          addLowRollingHills();
+          addSCurves();
+          addCurve(ROAD.LENGTH.MEDIUM, ROAD.CURVE.MEDIUM, ROAD.HILL.LOW);
+          addBumps();
+          addLowRollingHills();
+          addCurve(ROAD.LENGTH.LONG*2, ROAD.CURVE.MEDIUM, ROAD.HILL.MEDIUM);
+          addStraight();
+          addHill(ROAD.LENGTH.MEDIUM, ROAD.HILL.HIGH);
+          addSCurves();
+          addCurve(ROAD.LENGTH.LONG, -ROAD.CURVE.MEDIUM, ROAD.HILL.NONE);
+          addHill(ROAD.LENGTH.LONG, ROAD.HILL.HIGH);
+          addCurve(ROAD.LENGTH.LONG, ROAD.CURVE.MEDIUM, -ROAD.HILL.LOW);
+          addBumps();
+          addHill(ROAD.LENGTH.LONG, -ROAD.HILL.MEDIUM);
+          addStraight();
+          addSCurves();
+          addDownhillToEnd();
+      }
 
       resetSprites();
       resetCars();
@@ -576,7 +625,7 @@ function racer() {
       refreshTweakUI();
 
       if ((segments.length==0) || (options.segmentLength) || (options.rumbleLength))
-        resetRoad(); // only rebuild road when necessary
+        resetRoad(randomTrack, randomTrackLength); // only rebuild road when necessary
     }
 
     //=========================================================================
