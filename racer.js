@@ -46,6 +46,17 @@ function racer() {
     var currentRotation = 0;                     // horizon tilt initialization
     var randomTrack = true;                     // enable random procedural generation of the track
     var randomTrackLength = 5;                  // if random track is enable, how many track segments/constructs to build?
+    var gamemode = 1;                               // Gamemode: 0: fastest lap, 1: out of time
+
+    // Gamemode 1: out of time
+    var remainingTime = (randomTrackLength * 10);                         // remaining time left to pass the next finish line or it's game over
+    var difficultyStart = 4;                         // Starting difficulty (track length)
+    var difficultyIncrement = 1;                // How much to increment the difficulty (and track length) each time player finish a track?
+    var difficultyGap = 2;                          // After how many track finishes do we start to increase the difficulty in terms of number of cars on road, number of turns, etc
+    var difficultyMax = 20;                      // Maximum difficulty, after this there will be no increase in difficulty
+    var difficultyCurrent = difficultyStart;    // Current difficulty (will be modified ingame)
+    var timeIncrease = 10;                      // Amount of seconds (will be multiplied by difficultyCurrent) to give to the user everytime the finish line is crossed (raising this value will make the game easier)
+    var remainingTimeThreshold = 20;      // When only this amount of time is left, the remaining time HUD will be highlighted (set to 0 to disable)
 
     var keyLeft        = false;
     var keyRight       = false;
@@ -55,8 +66,18 @@ function racer() {
     var hud = {
       speed:            { value: null, dom: Dom.get('speed_value')            },
       current_lap_time: { value: null, dom: Dom.get('current_lap_time_value') },
+      remaining_time: { value: null, dom: Dom.get('remaining_time_value') },
       last_lap_time:    { value: null, dom: Dom.get('last_lap_time_value')    },
-      fast_lap_time:    { value: null, dom: Dom.get('fast_lap_time_value')    }
+      fast_lap_time:    { value: null, dom: Dom.get('fast_lap_time_value')    },
+    }
+
+    // Hide either the current lap time or the remaining time HUD meter according to the selected gamemode
+    if (gamemode == 1) {
+        document.getElementById('current_lap_time').style.display = 'none';
+        document.getElementById('fast_lap_time').style.display = 'none';
+        document.getElementById('last_lap_time').style.display = 'none';
+    } else {
+        document.getElementById('remaining_time').style.display = 'none';
     }
 
     //=========================================================================
@@ -128,31 +149,63 @@ function racer() {
 
       if (position > playerZ) {
         if (currentLapTime && (startPosition < playerZ)) { // arrived at finish line, update last lap time + generate new track if enabled
-          lastLapTime    = currentLapTime;
-          currentLapTime = 0;
-          if (randomTrack) { // generate procedurally a new track when arriving at the finish line
-            resetRoad(randomTrack, randomTrackLength);
+          if (gamemode == 1) { // Out of time gamemode
+            // Give the player some more time
+            var remainingTimePast = remainingTime;
+            remainingTime += difficultyCurrent * timeIncrease;
+            if ((remainingTimePast < remainingTimeThreshold) & (remainingTime > remainingTimeThreshold)) {
+                Dom.removeClassName('remaining_time_value', 'warninglow'); // remove any warning if there was one
+                Dom.addClassName('remaining_time_value', 'value');
+            }
+            // Increase current difficulty unless we are already at the max
+            if (difficultyCurrent < difficultyMax) {
+                difficultyCurrent += difficultyIncrement;
+            }
+            if (randomTrack) { // generate procedurally a new track when arriving at the finish line according to difficulty
+                // Generate a new track length according to difficulty
+                randomTrackLength = Math.floor(difficultyCurrent);
+                // Regenerate the new track
+                resetRoad(randomTrack, randomTrackLength);
+                // If we crossed the gap, then we increase the number of cars
+                if (((difficultyCurrent % difficultyGap) == 0) & (difficultyCurrent < difficultyMax)) {
+                    // Double the number of cars (keep in mind the track extended and we kept the same number of cars, so it's not too much to double)
+                    totalCars += Math.floor(totalCars);
+                    // And we redraw all cars TODO: make it look better (cars on screen at finish line will disappear)
+                    resetCars();
+                }
+            }
+          } else { // fastest lap time gamemode
+              lastLapTime    = currentLapTime;
+              currentLapTime = 0;
+              if (lastLapTime <= Util.toFloat(Dom.storage.fast_lap_time)) {
+                Dom.storage.fast_lap_time = lastLapTime;
+                updateHud('fast_lap_time', formatTime(lastLapTime));
+                Dom.addClassName('fast_lap_time', 'fastest');
+                Dom.addClassName('last_lap_time', 'fastest');
+              } else {
+                Dom.removeClassName('fast_lap_time', 'fastest');
+                Dom.removeClassName('last_lap_time', 'fastest');
+              }
+              updateHud('last_lap_time', formatTime(lastLapTime));
+              Dom.show('last_lap_time');
           }
-          if (lastLapTime <= Util.toFloat(Dom.storage.fast_lap_time)) {
-            Dom.storage.fast_lap_time = lastLapTime;
-            updateHud('fast_lap_time', formatTime(lastLapTime));
-            Dom.addClassName('fast_lap_time', 'fastest');
-            Dom.addClassName('last_lap_time', 'fastest');
-          }
-          else {
-            Dom.removeClassName('fast_lap_time', 'fastest');
-            Dom.removeClassName('last_lap_time', 'fastest');
-          }
-          updateHud('last_lap_time', formatTime(lastLapTime));
-          Dom.show('last_lap_time');
-        }
-        else {
+        } else {
+          // Else we are not yet at the finish line, we increase the time/decrease remaining time
           currentLapTime += dt;
+          remainingTime -= dt;
+
+          // Highlight remaining time if quite low
+          if (remainingTime < remainingTimeThreshold) {
+            Dom.removeClassName('remaining_time_value', 'value');
+            Dom.addClassName('remaining_time_value', 'warninglow');
+          }
         }
       }
 
+      // Update HUD
       updateHud('speed',            5 * Math.round(speed/500));
       updateHud('current_lap_time', formatTime(currentLapTime));
+      updateHud('remaining_time', formatTime(remainingTime));
     }
 
     //-------------------------------------------------------------------------
