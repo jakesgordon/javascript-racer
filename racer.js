@@ -114,6 +114,8 @@ function racer() {
             speed = Util.accelerate(speed, breaking, dt);
           else
             speed = Util.accelerate(speed, decel, dt);
+      } else { // game over flag, just decelerate the car until full stop
+        speed = Util.accelerate(speed, decel, dt);
       }
 
 
