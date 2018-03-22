@@ -20,7 +20,7 @@ body          { font-family: Arial, Helvetica, sans-serif; }
 #hud                   { position: absolute; z-index: 1; width: 640px; padding: 5px 0; font-family: Verdana, Geneva, sans-serif; font-size: 0.8em; background-color: rgba(255,0,0,0.4); color: black; border-bottom: 2px solid black; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 #hud .hud              { background-color: rgba(255,255,255,0.6); padding: 5px; border: 1px solid black; margin: 0 5px; transition-property: background-color; transition-duration: 2s; -webkit-transition-property: background-color; -webkit-transition-duration: 2s; }
 #hud #speed            { float: right; }
-#hud #current_lap_time { float: left;  }
+#hud #current_lap_time, #hud #current_level { float: left;  }
 #hud #last_lap_time    { float: left; display: none;  }
 #hud #fast_lap_time, #hud #remaining_time    { display: block; width: 12em;  margin: 0 auto; text-align: center; transition-property: background-color; transition-duration: 2s; -webkit-transition-property: background-color; -webkit-transition-duration: 2s; }
 #hud .value            { color: black; font-weight: bold; }

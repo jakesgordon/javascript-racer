@@ -52,11 +52,12 @@ function racer() {
     var remainingTime = (randomTrackLength * 10);                         // remaining time left to pass the next finish line or it's game over
     var difficultyStart = 4;                         // Starting difficulty (track length)
     var difficultyIncrement = 1;                // How much to increment the difficulty (and track length) each time player finish a track?
-    var difficultyGap = 2;                          // After how many track finishes do we start to increase the difficulty in terms of number of cars on road, number of turns, etc
+    var difficultyGap = 3;                          // After how many track finishes do we start to increase the difficulty in terms of number of cars on road, number of turns, etc
     var difficultyMax = 20;                      // Maximum difficulty, after this there will be no increase in difficulty
     var difficultyCurrent = difficultyStart;    // Current difficulty (will be modified ingame)
     var timeIncrease = 10;                      // Amount of seconds (will be multiplied by difficultyCurrent) to give to the user everytime the finish line is crossed (raising this value will make the game easier)
     var remainingTimeThreshold = 20;      // When only this amount of time is left, the remaining time HUD will be highlighted (set to 0 to disable)
+    var currentLevel = 0;                           // Just a value to display the current level
     var gameOverFlag = false;                       // this flag will be set if game over was triggered
 
     var keyLeft        = false;
@@ -67,6 +68,7 @@ function racer() {
     var hud = {
       speed:            { value: null, dom: Dom.get('speed_value')            },
       current_lap_time: { value: null, dom: Dom.get('current_lap_time_value') },
+      current_level: { value: null, dom: Dom.get('current_level_value') },
       remaining_time: { value: null, dom: Dom.get('remaining_time_value') },
       last_lap_time:    { value: null, dom: Dom.get('last_lap_time_value')    },
       fast_lap_time:    { value: null, dom: Dom.get('fast_lap_time_value')    },
@@ -79,6 +81,7 @@ function racer() {
         document.getElementById('last_lap_time').style.display = 'none';
     } else {
         document.getElementById('remaining_time').style.display = 'none';
+        document.getElementById('current_level').style.display = 'none';
     }
 
     //=========================================================================
@@ -157,6 +160,8 @@ function racer() {
       if (position > playerZ) {
         if (currentLapTime && (startPosition < playerZ)) { // arrived at finish line, update last lap time + generate new track if enabled
           if (gamemode == 1) { // Out of time gamemode
+            // Increase level (only useful for display, internally we use difficultyCurrent)
+            currentLevel += 1;
             // Give the player some more time
             var remainingTimePast = remainingTime;
             remainingTime += difficultyCurrent * timeIncrease;
@@ -222,6 +227,7 @@ function racer() {
       updateHud('speed',            5 * Math.round(speed/500));
       updateHud('current_lap_time', formatTime(currentLapTime));
       updateHud('remaining_time', formatTime(remainingTime));
+      updateHud('current_level', currentLevel);
     }
 
     //-------------------------------------------------------------------------
