@@ -1,4 +1,4 @@
-function racer() {
+function racer(gamemode) {
     var fps            = 60;                      // how many 'update' frames per second
     var step           = 1/fps;                   // how long is each frame (in seconds)
     var width          = 1024;                    // logical canvas width
@@ -46,7 +46,7 @@ function racer() {
     var currentRotation = 0;                     // horizon tilt initialization
     var randomTrack = true;                     // enable random procedural generation of the track
     var randomTrackLength = 5;                  // if random track is enable, how many track segments/constructs to build?
-    var gamemode = 1;                               // Gamemode: 0: fastest lap, 1: out of time
+    //var gamemode = 1;                               // Gamemode: 0: fastest lap, 1: out of time DEPRECATED: defined as argument now
 
     // Gamemode 1: out of time
     var remainingTime = (randomTrackLength * 10);                         // remaining time left to pass the next finish line or it's game over
@@ -80,8 +80,10 @@ function racer() {
         document.getElementById('fast_lap_time').style.display = 'none';
         document.getElementById('last_lap_time').style.display = 'none';
     } else {
-        document.getElementById('remaining_time').style.display = 'none';
-        document.getElementById('current_level').style.display = 'none';
+        try {
+            document.getElementById('remaining_time').style.display = 'none';
+            document.getElementById('current_level').style.display = 'none';
+        } catch(exc) {};
     }
 
     //=========================================================================
@@ -189,7 +191,7 @@ function racer() {
           } else { // fastest lap time gamemode
               lastLapTime    = currentLapTime;
               currentLapTime = 0;
-              if (lastLapTime <= Util.toFloat(Dom.storage.fast_lap_time)) {
+              if ((lastLapTime <= Util.toFloat(Dom.storage.fast_lap_time)) | (Util.toFloat(Dom.storage.fast_lap_time) == 0)) {
                 Dom.storage.fast_lap_time = lastLapTime;
                 updateHud('fast_lap_time', formatTime(lastLapTime));
                 Dom.addClassName('fast_lap_time', 'fastest');
@@ -211,7 +213,7 @@ function racer() {
           }
 
           // Highlight remaining time if quite low
-          if (remainingTime < remainingTimeThreshold) {
+          if ((gamemode == 1) & (remainingTime < remainingTimeThreshold)) {
             Dom.removeClassName('remaining_time_value', 'value');
             Dom.addClassName('remaining_time_value', 'warninglow');
           }
@@ -225,9 +227,12 @@ function racer() {
 
       // Update HUD
       updateHud('speed',            5 * Math.round(speed/500));
-      updateHud('current_lap_time', formatTime(currentLapTime));
-      updateHud('remaining_time', formatTime(remainingTime));
-      updateHud('current_level', currentLevel);
+      if (gamemode == 1) {
+        updateHud('remaining_time', formatTime(remainingTime));
+        updateHud('current_level', currentLevel);
+      } else {
+        updateHud('current_lap_time', formatTime(currentLapTime));
+      }
     }
 
     //-------------------------------------------------------------------------
