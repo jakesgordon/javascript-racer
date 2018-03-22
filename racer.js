@@ -511,7 +511,9 @@ function racer() {
           addDownhillToEnd();
       }
 
-      resetSprites(); // reset (or create) the environmental sprites
+      try { // workaround for the exception raised sometimes when the tracklength is too small (<5). TODO: fix the root cause of this.
+        resetSprites(); // reset (or create) the environmental sprites
+      } catch (exc) {console.log(exc);}
       //resetCars(); // don't necessarily reset cars, if we generate procedurally we just want the cars to continue
 
       segments[findSegment(playerZ).index + 2].color = COLORS.START;
