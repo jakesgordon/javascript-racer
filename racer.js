@@ -57,8 +57,12 @@ function racer(gamemode) {
     var difficultyCurrent = difficultyStart;    // Current difficulty (will be modified ingame)
     var timeIncrease = 7;                      // Amount of seconds (will be multiplied by difficultyCurrent) to give to the user everytime the finish line is crossed (raising this value will make the game easier)
     var remainingTimeThreshold = 20;      // When only this amount of time is left, the remaining time HUD will be highlighted (set to 0 to disable)
-    var currentLevel = 0;                           // Just a value to display the current level
+    var currentLevel = 0;                           // Internal variable, just a value to display the current level
     var gameOverFlag = false;                       // this flag will be set if game over was triggered
+    var changeBackgroundEvery = 3;              // change the background image every few levels, set to 0 to disable
+    var changeBackgroundCurrentAlpha = 0.0;          // internal variable from 0.0 to 1.0 to specify the current state of background switching (via progressing blending animation)
+    var currentBackground = 0;                      // internal variable to track which background we currently draw
+    var changeBackgroundFlag = false;           // internal variable to start the background change
 
     var keyLeft        = false;
     var keyRight       = false;
@@ -187,6 +191,10 @@ function racer(gamemode) {
                     // And we redraw all cars TODO: make it look better (cars on screen at finish line will disappear)
                     resetCars();
                 }
+            }
+            // Change background if enabled and we have passed enough levels
+            if ((changeBackgroundEvery > 0) & (currentLevel % changeBackgroundEvery == 0)) {
+                changeBackgroundFlag = true;
             }
           } else { // fastest lap time gamemode
               lastLapTime    = currentLapTime;
@@ -334,11 +342,43 @@ function racer(gamemode) {
       var x  = 0;
       var dx = - (baseSegment.curve * basePercent);
 
+      // Clear the canvas
       ctx.clearRect(0, 0, width, height);
 
-      Render.background(ctx, background, width, height, BACKGROUND.SKY,   skyOffset,  resolution * skySpeed  * playerY);
-      Render.background(ctx, background, width, height, BACKGROUND.HILLS, hillOffset, resolution * hillSpeed * playerY);
-      Render.background(ctx, background, width, height, BACKGROUND.TREES, treeOffset, resolution * treeSpeed * playerY);
+      // Order the background layers
+      if (currentBackground == 0) {
+        // Build the list of positions in the image to extract the appropriate background
+        // Depending on the current background, load as current the night or day version
+        background_pos_cur = [BACKGROUND.SKY, BACKGROUND.HILLS, BACKGROUND.TREES];
+        background_pos_next = [BACKGROUND.SKY2, BACKGROUND.HILLS2, BACKGROUND.TREES2];
+      } else {
+        background_pos_cur = [BACKGROUND.SKY2, BACKGROUND.HILLS2, BACKGROUND.TREES2];
+        background_pos_next = [BACKGROUND.SKY, BACKGROUND.HILLS, BACKGROUND.TREES];
+      }
+      // Draw the background layers
+      if (!changeBackgroundFlag) {
+          // No switching, we draw one set of backgrounds
+          Render.background(ctx, background, width, height, background_pos_cur[0], skyOffset,  resolution * skySpeed  * playerY, 1.0);
+          Render.background(ctx, background, width, height, background_pos_cur[1], hillOffset, resolution * hillSpeed * playerY, 1.0);
+          Render.background(ctx, background, width, height, background_pos_cur[2], treeOffset, resolution * treeSpeed * playerY, 1.0);
+      } else {
+          // else we are in the process of switching, do a progressive blending
+          // continue the blending
+          changeBackgroundCurrentAlpha += 0.01; // increase the alpha for one, and decrease for the next background set
+          Render.background(ctx, background, width, height, background_pos_cur[0], skyOffset,  resolution * skySpeed  * playerY, 1.0-changeBackgroundCurrentAlpha);
+          Render.background(ctx, background, width, height, background_pos_cur[1], hillOffset, resolution * hillSpeed * playerY, 1.0-changeBackgroundCurrentAlpha);
+          Render.background(ctx, background, width, height, background_pos_cur[2], treeOffset, resolution * treeSpeed * playerY, 1.0-changeBackgroundCurrentAlpha);
+          Render.background(ctx, background, width, height, background_pos_next[0], skyOffset,  resolution * skySpeed  * playerY, changeBackgroundCurrentAlpha);
+          Render.background(ctx, background, width, height, background_pos_next[1], hillOffset, resolution * hillSpeed * playerY, changeBackgroundCurrentAlpha);
+          Render.background(ctx, background, width, height, background_pos_next[2], treeOffset, resolution * treeSpeed * playerY, changeBackgroundCurrentAlpha);
+          if (changeBackgroundCurrentAlpha >= 1.0) {
+              // blending is done, disable the flags and reinit all related vars
+              // Note: it is important to still do the drawing (and not put it in an if statement) because else the last drawing won't be done, there will be no background for a split-second and this will produce a flickering effect
+              currentBackground = (currentBackground + 1) % 2
+              changeBackgroundCurrentAlpha = 0.0;
+              changeBackgroundFlag = false;
+          }
+      }
 
       var n, i, segment, car, sprite, spriteScale, spriteX, spriteY;
 

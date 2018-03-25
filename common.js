@@ -266,7 +266,7 @@ var Render = {
 
   //---------------------------------------------------------------------------
 
-  background: function(ctx, background, width, height, layer, rotation, offset) {
+  background: function(ctx, background, width, height, layer, rotation, offset, alpha) {
 
     rotation = rotation || 0;
     offset   = offset   || 0;
@@ -284,9 +284,15 @@ var Render = {
     var destW = Math.floor(width * (sourceW/imageW));
     var destH = height;
 
+    ctx.save(); // save the current drawing parameters
+    ctx.globalAlpha = alpha; // change alpha for next drawing
+
     ctx.drawImage(background, sourceX, sourceY, sourceW, sourceH, destX, destY, destW, destH);
     if (sourceW < imageW)
       ctx.drawImage(background, layer.x, sourceY, imageW-sourceW, sourceH, destW-1, destY, width-destW, destH);
+
+    // restore previous alpha and drawing parameters
+    ctx.restore()
   },
 
   //---------------------------------------------------------------------------
@@ -366,7 +372,10 @@ var COLORS = {
 var BACKGROUND = {
   HILLS: { x:   5, y:   5, w: 1280, h: 480 },
   SKY:   { x:   5, y: 495, w: 1280, h: 480 },
-  TREES: { x:   5, y: 985, w: 1280, h: 480 }
+  TREES: { x:   5, y: 985, w: 1280, h: 480 },
+  HILLS2: { x:   5, y: 1475, w: 1280, h: 480 },
+  SKY2: { x:   5, y: 1965, w: 1280, h: 480 },
+  TREES2: { x:   5, y: 2445, w: 1280, h: 480 },
 };
 
 var SPRITES = {
