@@ -49,13 +49,13 @@ function racer(gamemode) {
     //var gamemode = 1;                               // Gamemode: 0: fastest lap, 1: out of time DEPRECATED: defined as argument now
 
     // Gamemode 1: out of time
-    var remainingTime = (randomTrackLength * 10);                         // remaining time left to pass the next finish line or it's game over
+    var remainingTime = (randomTrackLength * 20);                         // remaining time left to pass the next finish line or it's game over
     var difficultyStart = 4;                         // Starting difficulty (track length)
     var difficultyIncrement = 1;                // How much to increment the difficulty (and track length) each time player finish a track?
-    var difficultyGap = 3;                          // After how many track finishes do we start to increase the difficulty in terms of number of cars on road, number of turns, etc
+    var difficultyGap = 4;                          // After how many track finishes do we start to increase the difficulty in terms of number of cars on road, number of turns, etc
     var difficultyMax = 20;                      // Maximum difficulty, after this there will be no increase in difficulty
     var difficultyCurrent = difficultyStart;    // Current difficulty (will be modified ingame)
-    var timeIncrease = 10;                      // Amount of seconds (will be multiplied by difficultyCurrent) to give to the user everytime the finish line is crossed (raising this value will make the game easier)
+    var timeIncrease = 7;                      // Amount of seconds (will be multiplied by difficultyCurrent) to give to the user everytime the finish line is crossed (raising this value will make the game easier)
     var remainingTimeThreshold = 20;      // When only this amount of time is left, the remaining time HUD will be highlighted (set to 0 to disable)
     var currentLevel = 0;                           // Just a value to display the current level
     var gameOverFlag = false;                       // this flag will be set if game over was triggered
@@ -180,7 +180,7 @@ function racer(gamemode) {
                 randomTrackLength = Math.floor(difficultyCurrent);
                 // Regenerate the new track
                 resetRoad(randomTrack, randomTrackLength);
-                // If we crossed the gap, then we increase the number of cars
+                // If we crossed the difficulty gap (ie, every few levels), then we increase the number of cars
                 if (((difficultyCurrent % difficultyGap) == 0) & (difficultyCurrent < difficultyMax)) {
                     // Double the number of cars (keep in mind the track extended and we kept the same number of cars, so it's not too much to double)
                     totalCars += Math.floor(totalCars);
@@ -665,7 +665,7 @@ function racer(gamemode) {
       var n, car, segment, offset, z, sprite, speed;
       for (var n = 0 ; n < totalCars ; n++) {
         offset = Math.random() * Util.randomChoice([-0.8, 0.8]);
-        z      = Math.floor(Math.random() * segments.length) * segmentLength;
+        z = (Math.floor(Math.random() * (segments.length-400)) * segmentLength) + (100*segmentLength); // ensure that cars do not respawn just in front of the player, so we generate cars in all segments except the first and last (after and before finish line) - TODO: fix me in a more elegant way, without using constants
         sprite = Util.randomChoice(SPRITES.CARS);
         speed  = maxSpeed/4 + Math.random() * maxSpeed/(sprite == SPRITES.SEMI ? 4 : 2);
         car = { offset: offset, z: z, sprite: sprite, speed: speed };
