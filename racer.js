@@ -758,9 +758,10 @@ function racer(gamemode) {
       resolution             = height/480;
       refreshTweakUI();
 
-      if ((segments.length==0) || (options.segmentLength) || (options.rumbleLength))
+      if ((segments.length==0) || (options.segmentLength) || (options.rumbleLength)) {
         resetRoad(randomTrack, randomTrackLength); // only rebuild road when necessary
         resetCars();
+      }
     }
 
     //=========================================================================
