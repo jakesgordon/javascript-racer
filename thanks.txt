@@ -21,4 +21,5 @@ Sprites:
 * The rest by Lrq3000 using Inkscape tutorials by Nick Saporito: https://www.youtube.com/channel/UCEQXp_fcqwPcqrzNtWJ1w9w
 Background:
 * Seaside Sunrise by Viscious-Speed: https://openclipart.org/detail/234135/seaside-sunrise
+* Jakes Gordon for the trees during daytime
 * Retro night-time background by Lrq3000
