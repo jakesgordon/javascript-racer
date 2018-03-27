@@ -51,11 +51,11 @@ function racer(gamemode) {
     // Gamemode 1: out of time
     var remainingTime = 0;                         // internal variable - remaining time left to pass the next finish line or it's game over, will be calculated automatically
     var difficultyStart = 4;                         // Starting difficulty (track length)
-    var difficultyIncrement = 1;                // How much to increment the difficulty (and track length) each time player finish a track?
-    var difficultyGap = 4;                          // After how many track finishes do we start to increase the difficulty in terms of number of cars on road, number of turns, etc
-    var difficultyMax = 20;                      // Maximum difficulty, after this there will be no increase in difficulty
+    var difficultyIncrement = 0.5;                // How much to increment the difficulty (and track length) each time player finish a track?
+    var difficultyGap = 2.0;                          // After how many track finishes do we start to increase the difficulty in terms of number of cars on road, number of turns, etc
+    var difficultyMax = 14;                      // Maximum difficulty, after this there will be no increase in difficulty
     var difficultyCurrent = difficultyStart;    // Current difficulty (will be modified ingame)
-    var remainingTimeIncrease = 0.0001;                      // Multiplier of the trackLength to get seconds that will be added to the remainingTime, in other words this defines the time left to the player to finish the track proportionally to the track length (a higher value makes the game easier)
+    var remainingTimeIncrease = 0.00009;                      // Multiplier of the trackLength to get seconds that will be added to the remainingTime, in other words this defines the time left to the player to finish the track proportionally to the track length (a higher value makes the game easier)
     var remainingTimeStartBonus = 2.0;                      // Multiplier of the remaining time given for the first level (to make game easier for newscomers), also because the player has no momentum at the beginning
     var remainingTimeThreshold = 20;      // When only this amount of time is left, the remaining time HUD will be highlighted (set to 0 to disable)
     var currentLevel = 0;                           // Internal variable, just a value to display the current level
