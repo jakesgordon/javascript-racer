@@ -49,13 +49,14 @@ function racer(gamemode) {
     //var gamemode = 1;                               // Gamemode: 0: fastest lap, 1: out of time DEPRECATED: defined as argument now
 
     // Gamemode 1: out of time
-    var remainingTime = (randomTrackLength * 20);                         // remaining time left to pass the next finish line or it's game over
+    var remainingTime = 0;                         // internal variable - remaining time left to pass the next finish line or it's game over, will be calculated automatically
     var difficultyStart = 4;                         // Starting difficulty (track length)
     var difficultyIncrement = 1;                // How much to increment the difficulty (and track length) each time player finish a track?
     var difficultyGap = 4;                          // After how many track finishes do we start to increase the difficulty in terms of number of cars on road, number of turns, etc
     var difficultyMax = 20;                      // Maximum difficulty, after this there will be no increase in difficulty
     var difficultyCurrent = difficultyStart;    // Current difficulty (will be modified ingame)
-    var timeIncrease = 7;                      // Amount of seconds (will be multiplied by difficultyCurrent) to give to the user everytime the finish line is crossed (raising this value will make the game easier)
+    var remainingTimeIncrease = 0.0001;                      // Multiplier of the trackLength to get seconds that will be added to the remainingTime, in other words this defines the time left to the player to finish the track proportionally to the track length (a higher value makes the game easier)
+    var remainingTimeStartBonus = 2.0;                      // Multiplier of the remaining time given for the first level (to make game easier for newscomers), also because the player has no momentum at the beginning
     var remainingTimeThreshold = 20;      // When only this amount of time is left, the remaining time HUD will be highlighted (set to 0 to disable)
     var currentLevel = 0;                           // Internal variable, just a value to display the current level
     var gameOverFlag = false;                       // this flag will be set if game over was triggered
@@ -170,7 +171,7 @@ function racer(gamemode) {
             currentLevel += 1;
             // Give the player some more time
             var remainingTimePast = remainingTime;
-            remainingTime += difficultyCurrent * timeIncrease;
+            remainingTime += trackLength * remainingTimeIncrease;
             if ((remainingTimePast < remainingTimeThreshold) & (remainingTime > remainingTimeThreshold)) {
                 Dom.removeClassName('remaining_time_value', 'warninglow'); // remove any warning if there was one
                 Dom.addClassName('remaining_time_value', 'value');
@@ -218,6 +219,9 @@ function racer(gamemode) {
             remainingTime -= dt;
           } else {
             remainingTime = 0;
+            if (currentLevel == 0) { // first level, we give some time to the player
+                remainingTime += trackLength * remainingTimeIncrease * remainingTimeStartBonus;
+            }
           }
 
           // Highlight remaining time if quite low
