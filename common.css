@@ -10,7 +10,7 @@ a { color: magenta; }
 #controls th  { text-align: right; vertical-align: middle; }
 #instructions { clear: left; float: left; width: 17em; padding: 1em; border: 1px solid black; box-shadow: 0 0 5px lime; }
 #racer        { position: relative; z-index: 0; width: 640px; height: 480px; margin-left: 20em; border: 2px solid magenta; }
-#canvas       { position: absolute; z-index: 0; width: 640px; height: 480px; z-index: 0; background-color: #72D7EE; }
+#canvas       { position: absolute; z-index: 0; width: 640px; height: 480px; z-index: 0; background-color: black; /* default color when drawing out of bounds (eg, we are up a high hill and the background is too low)*/ }
 #mute         { background-position:   0px 0px; width: 32px; height: 32px; background: url(images/mute.png); display: inline-block; cursor: pointer; position: absolute; margin-left: 20em; }
 #mute.on      { background-position: -32px 0px; }
 

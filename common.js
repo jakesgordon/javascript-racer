@@ -360,13 +360,13 @@ var KEY = {
 };
 
 var COLORS = {
-  SKY:  'orange',
+  SKY:  'black',
   TREE: 'cyan',
   FOG:  'magenta',
   LIGHT:  { road: 'black', grass: 'purple', rumble: 'cyan', lane: 'cyan'  },
   DARK:   { road: 'black', grass: 'black', rumble: 'cyan'                   },
   START:  { road: 'magenta',   grass: 'magenta',   rumble: 'magenta'                     },
-  FINISH: { road: 'cyan',   grass: 'cyan',   rumble: 'cya'                     }
+  FINISH: { road: 'cyan',   grass: 'cyan',   rumble: 'cyan'                     }
 };
 
 var BACKGROUND = {
