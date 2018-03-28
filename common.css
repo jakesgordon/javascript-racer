@@ -42,13 +42,23 @@ a { color: magenta; }
     animation-iteration-count: infinite;
 }
 
+/* Fullscreen mode (on double click, managed in JS */
+#canvas:fullscreen {
+	width: auto;
+    height: 100%; /* height is smaller than width, so resize by height and adapt width automatically */
+}
+#canvas:-webkit-full-screen {
+	width: auto;
+    height: 100%;
+}
 
-/*
-#racer { 
-  width: auto; 
+#canvas:-moz-full-screen {
+	width: auto;
+    height: 100%;
 }
-#canvas { 
-  width: 100%; 
-  height: auto;
+
+#canvas:-ms-fullscreen {
+    width: auto;
+    height: auto;
+    margin: auto;
 }
-*/

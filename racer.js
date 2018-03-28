@@ -742,6 +742,9 @@ function racer(gamemode) {
         reset();
         Dom.storage.fast_lap_time = Dom.storage.fast_lap_time || 180;
         updateHud('fast_lap_time', formatTime(Util.toFloat(Dom.storage.fast_lap_time)));
+        // Allow to put in fullscreen
+        var e = document.getElementById('canvas');
+        e.ondblclick = fullscreenOnClick;
       }
     });
 
@@ -800,5 +803,37 @@ function racer(gamemode) {
       Dom.get('currentFogDensity').innerHTML     = Dom.get('fogDensity').value     = fogDensity;
     }
 
+    function fullscreenOnClick() {
+        // Manage full screen mode on double click
+        // from: https://www.sitepoint.com/use-html5-full-screen-api/
+        if (document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement
+        ) {
+            // exit full-screen
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        } else {
+            // go full-screen
+            var e = document.getElementById('canvas');
+            if (e.requestFullscreen) {
+                e.requestFullscreen();
+            } else if (e.webkitRequestFullscreen) {
+                e.webkitRequestFullscreen();
+            } else if (e.mozRequestFullScreen) {
+                e.mozRequestFullScreen();
+            } else if (e.msRequestFullscreen) {
+                e.msRequestFullscreen();
+            }
+        }
+    }
     //=========================================================================
 }
