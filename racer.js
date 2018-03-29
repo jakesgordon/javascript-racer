@@ -64,6 +64,16 @@ function racer(gamemode) {
     var changeBackgroundCurrentAlpha = 0.0;          // internal variable from 0.0 to 1.0 to specify the current state of background switching (via progressing blending animation)
     var currentBackground = 0;                      // internal variable to track which background we currently draw
     var changeBackgroundFlag = false;           // internal variable to start the background change
+    var turboLeft = 3;                                      // number of turbos left
+    var turboDuration = 10.0;                            // duration of turbo in seconds
+    var turboAnimation = 2.0;                           // duration of animation to do progressive increase/decrease of fov
+    var turboFovIncrement = 1.4;                        // multiplier of fov during turbo
+    var turboMaxSpeed = maxSpeed * 1.5;         // maximum speed under turbo
+    var turboGiveEvery = changeBackgroundEvery;     // give a new turbo every x levels (set to 0 to disable)
+    var turboCentrifugal = centrifugal/2;                         // torque when under turbo (else the player cannot turn in curves)
+    var turboTriggered = false;                         // internal variable - turbo triggered by player?
+    var turboTimeDone = 0.0;                             // internal variable - turbo being consumed, since how much time (allow to do animation and such)
+    var turboCurrentFov = fieldOfView;              // internal variable - current fov while doing turbo
 
     var keyLeft        = false;
     var keyRight       = false;
@@ -74,6 +84,7 @@ function racer(gamemode) {
       speed:            { value: null, dom: Dom.get('speed_value')            },
       current_lap_time: { value: null, dom: Dom.get('current_lap_time_value') },
       current_level: { value: null, dom: Dom.get('current_level_value') },
+      turbo_left: { value: null, dom: Dom.get('turbo_left_value') },
       remaining_time: { value: null, dom: Dom.get('remaining_time_value') },
       last_lap_time:    { value: null, dom: Dom.get('last_lap_time_value')    },
       fast_lap_time:    { value: null, dom: Dom.get('fast_lap_time_value')    },
@@ -88,6 +99,7 @@ function racer(gamemode) {
         try {
             document.getElementById('remaining_time').style.display = 'none';
             document.getElementById('current_level').style.display = 'none';
+            document.getElementById('turbo_left').style.display = 'none';
         } catch(exc) {};
     }
 
@@ -115,7 +127,13 @@ function racer(gamemode) {
             playerX = playerX + dx;
       }
 
-      playerX = playerX - (dx * speedPercent * playerSegment.curve * centrifugal);
+      if (turboTriggered && gamemode == 1) {
+        // give more torque under turbo
+        playerX = playerX - (dx * speedPercent * playerSegment.curve * turboCentrifugal);
+      } else {
+        // else manage the torque as usual
+        playerX = playerX - (dx * speedPercent * playerSegment.curve * centrifugal);
+      }
 
       if (!gameOverFlag) {
           if (keyFaster)
@@ -158,7 +176,40 @@ function racer(gamemode) {
       }
 
       playerX = Util.limit(playerX, -3, 3);     // dont ever let it go too far out of bounds
-      speed   = Util.limit(speed, 0, maxSpeed); // or exceed maxSpeed
+      if (!turboTriggered) {
+        // Normal speed limit, no turbo
+        speed   = Util.limit(speed, 0, maxSpeed); // or exceed maxSpeed
+      } else if (gamemode == 1) {
+        // Turbo management
+        speed   = Util.limit(speed, 0, turboMaxSpeed); // do not exceed turbo max speed
+        accel = turboMaxSpeed / 3; // increase acceleration
+        turboTimeDone += dt; // increase the current consumed time of turbo
+        if (turboTimeDone < turboDuration) {
+            // if turbo time is left, we can continue
+            if (turboTimeDone < turboAnimation) {
+                // turbo initialization animation, increase fov
+                turboFov = fieldOfView * turboFovIncrement;
+                if (turboCurrentFov < turboFov) {
+                    turboCurrentFov += (turboFov - fieldOfView) * (dt/turboAnimation);
+                    updateFOV(turboCurrentFov);
+                }
+            } else if (turboDuration <= (turboTimeDone + turboAnimation)) {
+                // turbo end animation, decrease fov
+                if (turboCurrentFov > fieldOfView) {
+                    turboCurrentFov -= (turboFov - fieldOfView) * (dt/turboAnimation);
+                    updateFOV(turboCurrentFov);
+                }
+                if (speed > maxSpeed) {
+                    // also decrease speed gradually
+                    speed -= (turboMaxSpeed - maxSpeed) * (dt/turboAnimation)*3; // *3 is magic value to overcome the fact that the car will still get acceleration next frame and is still capped at turboMaxSpeed (see Util.limit above). By multiplying by 2 we cancel the next increase.
+                }
+            }
+        } else {
+            // no turbo time left, disable the turbo mode
+            turboTriggered = false;
+            updateFOV(fieldOfView); // reinit fieldOfView
+        }
+      }
 
       skyOffset  = Util.increase(skyOffset,  skySpeed  * playerSegment.curve * (position-startPosition)/segmentLength, 1);
       hillOffset = Util.increase(hillOffset, hillSpeed * playerSegment.curve * (position-startPosition)/segmentLength, 1);
@@ -197,6 +248,10 @@ function racer(gamemode) {
             if ((changeBackgroundEvery > 0) & (currentLevel % changeBackgroundEvery == 0)) {
                 changeBackgroundFlag = true;
             }
+            // Add a turbo if passed enough levels
+            if ((turboGiveEvery > 0) & (currentLevel % turboGiveEvery == 0)) {
+                turboLeft += 1;
+            }
           } else { // fastest lap time gamemode
               lastLapTime    = currentLapTime;
               currentLapTime = 0;
@@ -230,6 +285,13 @@ function racer(gamemode) {
             Dom.addClassName('remaining_time_value', 'warninglow');
           }
 
+          // Highlight turbo when in use
+          if (turboTriggered) {
+            Dom.addClassName('turbo_left', 'magenta');
+          } else {
+            Dom.removeClassName('turbo_left', 'magenta');
+          }
+
           // Call game over if conditions are met
           if ((gamemode == 1) & (remainingTime <= 0)) { // gamemode out of time and no remaining time left
             gameOverFlag = true;
@@ -242,6 +304,7 @@ function racer(gamemode) {
       if (gamemode == 1) {
         updateHud('remaining_time', formatTime(remainingTime));
         updateHud('current_level', currentLevel);
+        updateHud('turbo_left', turboLeft);
       } else {
         updateHud('current_lap_time', formatTime(currentLapTime));
       }
@@ -734,7 +797,14 @@ function racer(gamemode) {
         { keys: [KEY.LEFT,  KEY.A], mode: 'up',   action: function() { keyLeft   = false; } },
         { keys: [KEY.RIGHT, KEY.D], mode: 'up',   action: function() { keyRight  = false; } },
         { keys: [KEY.UP,    KEY.W], mode: 'up',   action: function() { keyFaster = false; } },
-        { keys: [KEY.DOWN,  KEY.S], mode: 'up',   action: function() { keySlower = false; } }
+        { keys: [KEY.DOWN,  KEY.S], mode: 'up',   action: function() { keySlower = false; } },
+        { keys: [KEY.SPACE, KEY.CTRL], mode: 'down',   action: function() { // turbo trigger function
+                                    if (gamemode == 1 && turboLeft > 0 && !turboTriggered) {
+                                        turboCurrentFov = fieldOfView;
+                                        turboTimeDone = 0.0;
+                                        turboTriggered = true;
+                                        turboLeft -= 1;
+                                    } } }
       ],
       ready: function(images) {
         background = images[0];
@@ -769,6 +839,11 @@ function racer(gamemode) {
         resetRoad(randomTrack, randomTrackLength); // only rebuild road when necessary
         resetCars();
       }
+    }
+    
+    function updateFOV(fov) {
+        cameraDepth            = 1 / Math.tan((fov/2) * Math.PI/180);
+        playerZ                = (cameraHeight * cameraDepth);
     }
 
     //=========================================================================
