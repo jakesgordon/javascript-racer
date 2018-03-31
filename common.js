@@ -186,32 +186,14 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
         if (k.div) {
             elt = document.getElementById(k.div);
             if (elt) { // if the specified div element does not exist, just skip (probably the gamepad is not coded in the html)
-                /*
-                if (k.mode == 'up') {
-                    event = 'onmouseup';
-                    eventtouch = 'touchend';
-                } else {
-                    event = 'onmousedown';
-                    eventtouch = 'touchstart';
-                }
-                */
-                // action with mouse
-                // Note: this is commented out because it did not work in my tests, but this should be the correct way
-                /*
-                Dom.on(elt, event, function() { k.action.call(); } );
-                elt.addEventListener(event, function() { k.action.call(); } );
-                */
-                // action with touch
-                /*
-                Dom.on(elt, eventtouch, function() { k.action.call() } );
-                elt.addEventListener(eventtouch, function() { k.action.call(); } );
-                */
                 if (k.mode == 'up') {
                     elt.onmouseup = k.action;
-                    elt.ontouchend = k.action;
+                    elt.addEventListener('mouseup', k.action);
+                    elt.addEventListener('touchend', k.action);
                 } else {
-                    elt.onmousedown = k.action;
-                    elt.ontouchstart = k.action;
+                    elt.onmousedown = k.action; // fallback for old devices
+                    elt.addEventListener('mousedown', k.action);
+                    elt.addEventListener('touchstart', k.action);
                 }
             }
         }
