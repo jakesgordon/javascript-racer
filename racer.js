@@ -790,21 +790,15 @@ function racer(gamemode) {
       canvas: canvas, render: render, update: update, stats: stats, step: step,
       images: ["background", "sprites"],
       keys: [
-        { keys: [KEY.LEFT,  KEY.A], mode: 'down', action: function() { keyLeft   = true;  } },
-        { keys: [KEY.RIGHT, KEY.D], mode: 'down', action: function() { keyRight  = true;  } },
-        { keys: [KEY.UP,    KEY.W], mode: 'down', action: function() { keyFaster = true;  } },
-        { keys: [KEY.DOWN,  KEY.S], mode: 'down', action: function() { keySlower = true;  } },
-        { keys: [KEY.LEFT,  KEY.A], mode: 'up',   action: function() { keyLeft   = false; } },
-        { keys: [KEY.RIGHT, KEY.D], mode: 'up',   action: function() { keyRight  = false; } },
-        { keys: [KEY.UP,    KEY.W], mode: 'up',   action: function() { keyFaster = false; } },
-        { keys: [KEY.DOWN,  KEY.S], mode: 'up',   action: function() { keySlower = false; } },
-        { keys: [KEY.SPACE, KEY.CTRL], mode: 'down',   action: function() { // turbo trigger function
-                                    if (gamemode == 1 && turboLeft > 0 && !turboTriggered) {
-                                        turboCurrentFov = fieldOfView;
-                                        turboTimeDone = 0.0;
-                                        turboTriggered = true;
-                                        turboLeft -= 1;
-                                    } } }
+        { keys: [KEY.LEFT,  KEY.A], div: 'gamepad-left', mode: 'down', action: function() { keyLeft   = true;  } },
+        { keys: [KEY.RIGHT, KEY.D], div: 'gamepad-right', mode: 'down', action: function() { keyRight  = true;  } },
+        { keys: [KEY.UP,    KEY.W], div: 'gamepad-up', mode: 'down', action: function() { keyFaster = true;  } },
+        { keys: [KEY.DOWN,  KEY.S], div: 'gamepad-down', mode: 'down', action: function() { keySlower = true;  } },
+        { keys: [KEY.LEFT,  KEY.A], div: 'gamepad-left', mode: 'up',   action: function() { keyLeft   = false; } },
+        { keys: [KEY.RIGHT, KEY.D], div: 'gamepad-right', mode: 'up',   action: function() { keyRight  = false; } },
+        { keys: [KEY.UP,    KEY.W], div: 'gamepad-up', mode: 'up',   action: function() { keyFaster = false; } },
+        { keys: [KEY.DOWN,  KEY.S], div: 'gamepad-down', mode: 'up',   action: function() { keySlower = false; } },
+        { keys: [KEY.SPACE, KEY.CTRL], div: 'gamepad-turbo', mode: 'down',   action: triggerTurbo }
       ],
       ready: function(images) {
         background = images[0];
@@ -908,6 +902,16 @@ function racer(gamemode) {
             } else if (e.msRequestFullscreen) {
                 e.msRequestFullscreen();
             }
+        }
+    }
+
+    function triggerTurbo() {
+    // turbo trigger function
+        if (gamemode == 1 && turboLeft > 0 && !turboTriggered) {
+            turboCurrentFov = fieldOfView;
+            turboTimeDone = 0.0;
+            turboTriggered = true;
+            turboLeft -= 1;
         }
     }
     //=========================================================================

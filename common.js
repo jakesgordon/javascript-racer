@@ -107,6 +107,8 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
 
       Game.setKeyListener(options.keys);
 
+      Game.setDivListener(options.keys);
+
       var canvas = options.canvas,    // canvas render target is provided by caller
           update = options.update,    // method to update game logic is provided by caller
           render = options.render,    // method to render the game is provided by caller
@@ -157,6 +159,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
   //---------------------------------------------------------------------------
 
   setKeyListener: function(keys) {
+    // Setup listeners on keys to activate functions
     var onkey = function(keyCode, mode) {
       var n, k;
       for(n = 0 ; n < keys.length ; n++) {
@@ -171,6 +174,48 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
     };
     Dom.on(document, 'keydown', function(ev) { onkey(ev.keyCode, 'down'); } );
     Dom.on(document, 'keyup',   function(ev) { onkey(ev.keyCode, 'up');   } );
+  },
+
+  //---------------------------------------------------------------------------
+
+  setDivListener: function(keys) {
+    // Setup listeners on div to activate functions (for mobile devices)
+    var n, k;
+    for(n = 0 ; n < keys.length ; n++) {
+        k = keys[n]
+        if (k.div) {
+            elt = document.getElementById(k.div);
+            if (elt) { // if the specified div element does not exist, just skip (probably the gamepad is not coded in the html)
+                /*
+                if (k.mode == 'up') {
+                    event = 'onmouseup';
+                    eventtouch = 'touchend';
+                } else {
+                    event = 'onmousedown';
+                    eventtouch = 'touchstart';
+                }
+                */
+                // action with mouse
+                // Note: this is commented out because it did not work in my tests, but this should be the correct way
+                /*
+                Dom.on(elt, event, function() { k.action.call(); } );
+                elt.addEventListener(event, function() { k.action.call(); } );
+                */
+                // action with touch
+                /*
+                Dom.on(elt, eventtouch, function() { k.action.call() } );
+                elt.addEventListener(eventtouch, function() { k.action.call(); } );
+                */
+                if (k.mode == 'up') {
+                    elt.onmouseup = k.action;
+                    elt.touchend = k.action;
+                } else {
+                    elt.onmousedown = k.action;
+                    elt.touchstart = k.action;
+                }
+            }
+        }
+    }
   },
 
   //---------------------------------------------------------------------------

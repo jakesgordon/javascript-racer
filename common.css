@@ -63,3 +63,33 @@ a { color: magenta; }
     height: auto;
     margin: auto;
 }
+
+/* Mobile gamepad */
+#gamepad {
+    clear: left; float: left; width: 17em; border: 1px solid black; box-shadow: 0 0 5px lime;
+    width: 300px;
+    height: 200px;
+    background: rgba(255,0,0,0.4);
+    position: relative;
+    text-align: center;
+    display: inline-block;
+}
+.gamepad-button {
+    background: grey;
+    width: 100px;
+    height: 100px;
+    display: block;
+    float: left;
+}
+.gamepad-button span {
+    display: inline-block;
+    vertical-align: middle;
+}
+.gamepad-button:active { background: blue; }
+#gamepad-turbo { }
+#gamepad-up { }
+#gamepad-left { clear: both; }
+#gamepad-right { float: right; }
+#gamepad-down { }
+*/
+
