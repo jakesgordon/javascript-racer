@@ -80,6 +80,17 @@ a { color: magenta; }
     height: 100px;
     display: block;
     float: left;
+
+    /* Disable selection of text for gamepad buttons (so that user can press without selecting the text) */
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
 }
 .gamepad-button span {
     display: inline-block;
