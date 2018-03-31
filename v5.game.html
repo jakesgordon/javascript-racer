@@ -69,14 +69,12 @@
     <p>Cross the finish line before time runs out.</p>
     <p>Double click for fullscreen. Press CONTROL for turbo.</p>
   </div>
-  
-  <div id='gamepad'>
-      <div id='gamepad-turbo' class='gamepad-button'><span>Turbo</span></div>
-      <div id='gamepad-up' class='gamepad-button'><span>^</span></div>
-      <div id='gamepad-left' class='gamepad-button'><span><</span></div>
-      <div id='gamepad-right' class='gamepad-button'><span>></span></div>
-      <div id='gamepad-down' class='gamepad-button'><span>v</span></div>
-  </div>
+
+  <audio id='music'>
+    <source src="music/jsracer_soundtrack.ogg">
+    <source src="music/lsracer_soundtrack.mp3">
+  </audio>
+  <span id="mute"></span>
 
   <div id="racer">
     <div id="hud">
@@ -94,11 +92,13 @@
     Loading...
   </div>
 
-  <audio id='music'>
-    <source src="music/jsracer_soundtrack.ogg">
-    <source src="music/lsracer_soundtrack.mp3">
-  </audio>
-  <span id="mute"></span>
+  <div id='gamepad'>
+      <div id='gamepad-turbo' class='gamepad-button'><span>Turbo</span></div>
+      <div id='gamepad-up' class='gamepad-button'><span>^</span></div>
+      <div id='gamepad-left' class='gamepad-button'><span><</span></div>
+      <div id='gamepad-right' class='gamepad-button'><span>></span></div>
+      <div id='gamepad-down' class='gamepad-button'><span>v</span></div>
+  </div>
 
   <script src="stats.js"></script>
   <script src="common.js"></script>
