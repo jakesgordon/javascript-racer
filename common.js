@@ -208,10 +208,10 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
                 */
                 if (k.mode == 'up') {
                     elt.onmouseup = k.action;
-                    elt.touchend = k.action;
+                    elt.ontouchend = k.action;
                 } else {
                     elt.onmousedown = k.action;
-                    elt.touchstart = k.action;
+                    elt.ontouchstart = k.action;
                 }
             }
         }
