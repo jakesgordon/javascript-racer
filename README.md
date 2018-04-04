@@ -20,6 +20,7 @@ Incrementally built up in 5 parts:
 
 With detailed descriptions of how each part works:
 
+ * read [the intro post](http://codeincomplete.com/posts/2012/6/22/javascript_racer/)
  * read more about [v1 - straight roads](http://codeincomplete.com/posts/2012/6/23/javascript_racer_v1_straight)
  * read more about [v2 - curves](http://codeincomplete.com/posts/2012/6/24/javascript_racer_v2_curves/)
  * read more about [v3 - hills](http://codeincomplete.com/posts/2012/6/26/javascript_racer_v3_hills/)
