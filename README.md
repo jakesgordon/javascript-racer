@@ -1,18 +1,22 @@
 Javascript Pseudo 3D Racer
 ==========================
 
-An Outrun-style pseudo-3d racing game in HTML5 and Javascript
+An Outrun-style pseudo-3d racing game in HTML5 and Javascript, based on the awesome engine by [Jakes Gordon (Code InComplete)](https://github.com/jakesgordon/javascript-racer).
 
- * [play the game](http://codeincomplete.com/projects/racer/v4.final.html)
- * view the [source](https://github.com/jakesgordon/javascript-racer)
+![javascript-racer screenshot night time](https://github.com/lrq3000/javascript-racer/raw/master/screenshots/screenshot1.png)
+![javascript-racer screenshot daylight](https://github.com/lrq3000/javascript-racer/raw/master/screenshots/screenshot2.png)
+
+ * [play the game](https://lrq3000.github.io/javascript-racer/v5.game.html) ([or the original game](http://codeincomplete.com/projects/racer/v4.final.html))
+ * view the [source](https://github.com/lrq3000/javascript-racer) ([or the original engine source](https://github.com/jakesgordon/javascript-racer))
  * read about [how it works](http://codeincomplete.com/posts/2012/6/22/javascript_racer/)
 
-Incrementally built up in 4 parts:
+Incrementally built up in 5 parts:
 
- * play the [straight road demo](http://codeincomplete.com/projects/racer/v1.straight.html)
- * play the [curves demo](http://codeincomplete.com/projects/racer/v2.curves.html)
- * play the [hills demo](http://codeincomplete.com/projects/racer/v3.hills.html)
- * play the [final version](http://codeincomplete.com/projects/racer/v4.final.html)
+ * play the [straight road demo](https://lrq3000.github.io/javascript-racer/v1.straight.html)
+ * play the [curves demo](https://lrq3000.github.io/javascript-racer/v2.curves.html)
+ * play the [hills demo](https://lrq3000.github.io/javascript-racer/v3.hills.html)
+ * play the [final version - fastest lap game mode](https://lrq3000.github.io/javascript-racer/v4.final.html)
+ * play the [final game - out of time game mode](https://lrq3000.github.io/javascript-racer/v5.game.html)
 
 With detailed descriptions of how each part works:
 
@@ -62,8 +66,8 @@ really be considered just how to get started with a pseudo-3d racing game.
 If we were to try to turn it into a real game we would have to consider:
 
  * car sound fx
- * better synchronized music
- * full screen mode
+ * synchronized music change
+ * enhance full screen mode to include the HUD
  * HUD fx (flash on fastest lap, confetti, color coded speedometer, etc)
  * more accurate sprite collision
  * better car AI (steering, braking etc)
@@ -79,13 +83,14 @@ If we were to try to turn it into a real game we would have to consider:
  * multiple stages, different maps
  * a lap map, with current position indicator
  * road splits and joins
- * day/night cycle
+ * cars coming in opposite direction
  * weather effects
  * tunnels, bridges, clouds, walls, buildings
  * city, desert, ocean
  * add city of seattle and space needle to background
  * 'bad guys' - add some competetor drivers to race against as well as the 'traffic'
- * different game modes - fastest lap, 1-on-1 racing, collect coins ? shoot bad guys ?
+ * different game modes - 1-on-1 racing, collect coins ? shoot bad guys ?
+ * a nice retro intro (using [codeff](https://github.com/andrienko/codeff)?)
  * a whole lot of gameplay tuning
  * ...
  * ...
