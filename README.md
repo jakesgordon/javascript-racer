@@ -1,4 +1,4 @@
-Javascript Pseudo 3D Racer
+Javascript-Racer
 ==========================
 
 An Outrun-style pseudo-3d racing game in HTML5 and pure Javascript (no JQuery), playable on desktop and mobile devices, and based on the awesome engine by [Jakes Gordon (Code InComplete)](https://github.com/jakesgordon/javascript-racer).
