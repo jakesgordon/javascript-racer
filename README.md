@@ -1,7 +1,7 @@
 Javascript Pseudo 3D Racer
 ==========================
 
-An Outrun-style pseudo-3d racing game in HTML5 and Javascript, based on the awesome engine by [Jakes Gordon (Code InComplete)](https://github.com/jakesgordon/javascript-racer).
+An Outrun-style pseudo-3d racing game in HTML5 and pure Javascript (no JQuery), playable on desktop and mobile devices, and based on the awesome engine by [Jakes Gordon (Code InComplete)](https://github.com/jakesgordon/javascript-racer).
 
 ![javascript-racer screenshot night time](https://github.com/lrq3000/javascript-racer/raw/master/screenshots/screenshot1.png)
 ![javascript-racer screenshot daylight](https://github.com/lrq3000/javascript-racer/raw/master/screenshots/screenshot2.png)
@@ -40,8 +40,8 @@ Currently supported browsers include:
  * Chrome (v19+) works great, 60fps at high res... provided you dont have a bad GPU driver
  * IE9 - ok, 30fps at medium res... not great, but at least it works
 
-The current state of mobile browser performance is pretty dismal. Dont expect this to be playable on
-any mobile device.
+The current state of mobile browser performance is better than before but still just barely enough to run the game.
+Optimizing would surely help for mobile support.
 
 >> _NOTE: I havent actually spent anytime optimizing for performance yet. So it might be possible to
    make it play well on older browsers, but that's not really what this project is about._
