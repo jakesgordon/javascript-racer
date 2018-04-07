@@ -91,7 +91,7 @@ If we were to try to turn it into a real game we would have to consider:
  * add city of seattle and space needle to background
  * 'bad guys' - add some competetor drivers to race against as well as the 'traffic'
  * different game modes - 1-on-1 racing, collect coins ? shoot bad guys ?
- * a nice retro intro (using [codeff](https://github.com/andrienko/codeff)?)
+ * a nice retro intro (using [codef](https://github.com/N0NameN0/CODEF) or [phaser](http://phaser.io/examples/v2/demoscene/atari-intro)?)
  * a whole lot of gameplay tuning
  * ...
  * ...
