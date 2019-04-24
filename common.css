@@ -86,6 +86,14 @@ body {
   box-shadow: 0 0 5px black;
 }
 
+.credit {
+  position: fixed;
+  bottom: 2%;
+  text-align: center;
+  font-family: Audiowide;
+  font-size: 1em;
+}
+
 #racer {
   position: fixed;
   top: 0;
