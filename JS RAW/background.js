@@ -7,7 +7,7 @@ var BACKGROUND = {
   },
   SKY: {
     x: 5,
-    y: 495,
+    y: 1000,
     w: 1280,
     h: 580
   },

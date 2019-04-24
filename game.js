@@ -836,6 +836,7 @@ function reset(options) {
   if (segments.length == 0 || options.segmentLength || options.rumbleLength)
     resetRoad(); // only rebuild road when necessary
   console.log("Game Start");
+  hideControls();
 }
 
 //=========================================================================
@@ -962,18 +963,10 @@ function hideControls() {
   }
 }
 
-// 1. Create the button
-var button = document.createElement("button");
-button.innerHTML = "controls";
-button.id;
-
-// 2. Append somewhere
-var body = document.getElementsByTagName("body")[0];
-body.appendChild(button);
-
-// 3. Add event handler
-button.addEventListener("click", function() {
-  hideControls();
+document.addEventListener("keydown", function(e) {
+  if (e.keyCode == 220) {
+    hideControls();
+  }
 });
 
 //=========================================================================

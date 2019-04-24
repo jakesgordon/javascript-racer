@@ -6,7 +6,46 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: rgb(63, 63, 63);
+  background: linear-gradient(155deg, #ff00f5, #00b9ff);
+  background-size: 400% 400%;
+
+  -webkit-animation: AnimationName 0s ease infinite;
+  -moz-animation: AnimationName 0s ease infinite;
+  animation: AnimationName 0s ease infinite;
+
+  @-webkit-keyframes AnimationName {
+    0% {
+      background-position: 18% 0%;
+    }
+    50% {
+      background-position: 83% 100%;
+    }
+    100% {
+      background-position: 18% 0%;
+    }
+  }
+  @-moz-keyframes AnimationName {
+    0% {
+      background-position: 18% 0%;
+    }
+    50% {
+      background-position: 83% 100%;
+    }
+    100% {
+      background-position: 18% 0%;
+    }
+  }
+  @keyframes AnimationName {
+    0% {
+      background-position: 18% 0%;
+    }
+    50% {
+      background-position: 83% 100%;
+    }
+    100% {
+      background-position: 18% 0%;
+    }
+  }
 }
 
 #stats {
@@ -14,11 +53,11 @@ body {
 }
 
 #controls {
-  background-color: yellow;
+  background-color: rgb(255, 255, 255);
   position: fixed;
-  width: 10em;
   float: left;
   padding: 1em;
+  z-index: 1000;
   font-size: 0.7em;
 }
 
@@ -37,42 +76,30 @@ body {
 }
 
 #racer {
-  position: absolute;
-  margin: auto;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 0;
-  width: 1200px;
-  height: 800px;
-  /* margin-left: 20em; */
-  border: 2px solid black;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #canvas {
-  position: absolute;
-  z-index: 0;
-  width: 1200px;
-  height: 800px;
-  z-index: 0;
-  background-color: rgb(0, 0, 0);
-}
-
-#mute {
-  background-position: 0px 0px;
-  width: 32px;
-  height: 32px;
-  background: url(images/mute.png);
-  display: inline-block;
-  cursor: pointer;
-  position: absolute;
-  margin: auto;
-  left: 0;
-}
-
-#mute.on {
-  background-position: -32px 0px;
+  -webkit-box-shadow: 0px 0px 30px -6px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 30px -6px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 30px -6px rgba(0, 0, 0, 0.75);
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 1000px;
 }
 
 /**************************************************/
@@ -82,13 +109,17 @@ body {
 /**************************************************/
 
 #hud {
-  position: absolute;
-  z-index: 1;
-  width: 640px;
-  padding: 5px 0;
-  font-family: Verdana, Geneva, sans-serif;
-  font-size: 0.8em;
-  background-color: rgba(255, 0, 0, 0.4);
+  z-index: 10;
+  width: 50%;
+  margin-top: 2%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  font-family: Audiowide;
+  font-size: 1.5em;
+  background-color: rgba(247, 0, 255, 0.4);
   color: black;
   border-bottom: 2px solid black;
   box-sizing: border-box;
@@ -102,9 +133,9 @@ body {
   border: 1px solid black;
   margin: 0 5px;
   transition-property: background-color;
-  transition-duration: 2s;
+  transition-duration: 10s;
   -webkit-transition-property: background-color;
-  -webkit-transition-duration: 2s;
+  -webkit-transition-duration: 10s;
 }
 
 #hud #speed {
