@@ -9,9 +9,9 @@ body {
   background: linear-gradient(155deg, #ff00f5, #00b9ff);
   background-size: 400% 400%;
 
-  -webkit-animation: AnimationName 0s ease infinite;
-  -moz-animation: AnimationName 0s ease infinite;
-  animation: AnimationName 0s ease infinite;
+  -webkit-animation: AnimationName 5s ease infinite;
+  -moz-animation: AnimationName 5s ease infinite;
+  animation: AnimationName 5s ease infinite;
 
   @-webkit-keyframes AnimationName {
     0% {
@@ -46,6 +46,17 @@ body {
       background-position: 18% 0%;
     }
   }
+}
+
+.gif {
+  -webkit-box-shadow: 0px 0px 30px -6px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 30px -6px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 30px -6px rgba(0, 0, 0, 0.75);
+  position: fixed;
+  z-index: 100;
+  width: 25%;
+  top: 10%;
+  right: 10%;
 }
 
 #stats {
@@ -99,7 +110,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   display: block;
-  width: 1000px;
+  width: 800px;
 }
 
 /**************************************************/
@@ -111,7 +122,7 @@ body {
 #hud {
   z-index: 10;
   width: 50%;
-  margin-top: 2%;
+  margin-top: 1%;
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
@@ -119,9 +130,7 @@ body {
   display: block;
   font-family: Audiowide;
   font-size: 1.5em;
-  background-color: rgba(247, 0, 255, 0.4);
   color: black;
-  border-bottom: 2px solid black;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
