@@ -87,11 +87,14 @@ body {
 }
 
 .credit {
-  position: fixed;
+  position: absolute;
+  width: 50%;
   bottom: 2%;
-  text-align: center;
+  line-height: 0.2vw;
   font-family: Audiowide;
   font-size: 1em;
+  color: #00b9ff;
+  text-shadow: 0 0 10px black;
 }
 
 #racer {
