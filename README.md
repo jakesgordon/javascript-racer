@@ -1,6 +1,8 @@
 Javascript Pseudo 3D Racer
 ==========================
 
+[Click here](http://jsracer-quadnix.engine.quadnix.com) to play the Javascript Racer game in Quadnix Plugins.
+
 An Outrun-style pseudo-3d racing game in HTML5 and Javascript
 
  * [play the game](http://codeincomplete.com/projects/racer/v4.final.html)
