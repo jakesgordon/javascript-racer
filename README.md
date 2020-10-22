@@ -1,11 +1,11 @@
-Javascript Pseudo 3D Racer
-==========================
+🏎️Javascript Pseudo 3D Racer🏎️
+===============================
 
 An Outrun-style pseudo-3d racing game in HTML5 and Javascript
 
- * [play the game](http://codeincomplete.com/projects/racer/v4.final.html)
- * view the [source](https://github.com/jakesgordon/javascript-racer)
- * read about [how it works](http://codeincomplete.com/posts/2012/6/22/javascript_racer/)
+ * 🕹️ [play the game](http://codeincomplete.com/projects/racer/v4.final.html)
+ * 👨‍💻 view the [source](https://github.com/jakesgordon/javascript-racer)
+ * 📖 read about [how it works](http://codeincomplete.com/posts/2012/6/22/javascript_racer/)
 
 Incrementally built up in 4 parts:
 
@@ -21,8 +21,8 @@ With detailed descriptions of how each part works:
  * read more about [v3 - hills](http://codeincomplete.com/posts/2012/6/26/javascript_racer_v3_hills/)
  * read more about v4 - final (coming soon)
 
-A note on performance
-=====================
+A note on performance 📕
+========================
 
 The performance of this game is **very** machine/browser dependent. It works quite well in modern
 browsers, especially those with GPU canvas acceleration, but a bad graphics driver can kill it stone
@@ -41,8 +41,8 @@ any mobile device.
 >> _NOTE: I haven't actually spent anytime optimizing for performance yet. So it might be possible to
    make it play well on older browsers, but that's not really what this project is about._
 
-A note on code structure
-========================
+A note on code structure 🗃
+===========================
 
 This project happens to be implemented in javascript (because it's easy for prototyping) but
 is not intended to demonstrate javascript techniques or best practices. In fact, in order to
@@ -52,8 +52,8 @@ page (horror!) and, even worse, uses global variables and functions (OMG!).
 If I was building a real game I would have much more structure and organization to the
 code, but since it's just a racing game tech demo, I have elected to [KISS](http://en.wikipedia.org/wiki/KISS_principle).
 
-FUTURE
-======
+FUTURE 📈
+=========
 
 It's quite astounding what it takes to actually [finish](http://codeincomplete.com/posts/2011/9/21/defining_finished/)
 a game, even a simple one. And this is not a project that I plan on polishing into a finished state. It should
@@ -90,14 +90,14 @@ If we were to try to turn it into a real game we would have to consider:
  * ...
  * ...
 
-Related Links
-=============
+Related Links 🖇
+===============
 
  * [Lou's Pseudo-3d Page](http://www.extentofthejam.com/pseudo/) - high level how-to guide
  * [Racer 10k](https://github.com/onaluf/RacerJS) - another javascript racing game
 
-License
-=======
+License 📝
+==========
 
 [MIT](http://en.wikipedia.org/wiki/MIT_License) license.
 
