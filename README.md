@@ -32,25 +32,25 @@ and the draw distance to scale to fit your machine.
 Currently supported browsers include:
 
  * Firefox (v12+) works great, 60fps at high res - Nice!
- * Chrome (v19+) works great, 60fps at high res... provided you dont have a bad GPU driver
+ * Chrome (v19+) works great, 60fps at high res... provided you don't have a bad GPU driver
  * IE9 - ok, 30fps at medium res... not great, but at least it works
 
-The current state of mobile browser performance is pretty dismal. Dont expect this to be playable on
+The current state of mobile browser performance is pretty dismal. Don't expect this to be playable on
 any mobile device.
 
->> _NOTE: I havent actually spent anytime optimizing for performance yet. So it might be possible to
+>> _NOTE: I haven't actually spent anytime optimizing for performance yet. So it might be possible to
    make it play well on older browsers, but that's not really what this project is about._
 
 A note on code structure
 ========================
 
-This project happens to be implemented in javascript (because its easy for prototyping) but
+This project happens to be implemented in javascript (because it's easy for prototyping) but
 is not intended to demonstrate javascript techniques or best practices. In fact, in order to
 keep it simple to understand it embeds the javascript for each example directly in the HTML
 page (horror!) and, even worse, uses global variables and functions (OMG!).
 
 If I was building a real game I would have much more structure and organization to the
-code, but since its just a racing game tech demo, I have elected to [KISS](http://en.wikipedia.org/wiki/KISS_principle).
+code, but since it's just a racing game tech demo, I have elected to [KISS](http://en.wikipedia.org/wiki/KISS_principle).
 
 FUTURE
 ======
@@ -84,7 +84,7 @@ If we were to try to turn it into a real game we would have to consider:
  * tunnels, bridges, clouds, walls, buildings
  * city, desert, ocean
  * add city of seattle and space needle to background
- * 'bad guys' - add some competetor drivers to race against as well as the 'traffic'
+ * 'bad guys' - add some competitor drivers to race against as well as the 'traffic'
  * different game modes - fastest lap, 1-on-1 racing, collect coins ? shoot bad guys ?
  * a whole lot of gameplay tuning
  * ...
@@ -108,4 +108,6 @@ project and should not be reproduced.
 >> NOTE: the sprite graphics are placeholder graphics [borrowed](http://pixel.garoux.net/game/44) from the old
 genesis version of outrun and used here as teaching examples. If there are any pixel artists out there who want to 
 provide original art to turn this into a real game please get in touch!
+
+
 
