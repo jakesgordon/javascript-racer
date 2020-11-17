@@ -80,14 +80,19 @@ function racer(gamemode) {
     var keyFaster      = false;
     var keySlower      = false;
 
+    // Add variables to update HUD
     var hud = {
       speed:            { value: null, dom: Dom.get('speed_value')            },
       current_lap_time: { value: null, dom: Dom.get('current_lap_time_value') },
       current_level: { value: null, dom: Dom.get('current_level_value') },
-      turbo_left: { value: null, dom: Dom.get('turbo_left_value') },
       remaining_time: { value: null, dom: Dom.get('remaining_time_value') },
       last_lap_time:    { value: null, dom: Dom.get('last_lap_time_value')    },
       fast_lap_time:    { value: null, dom: Dom.get('fast_lap_time_value')    },
+    }
+
+    if (gamemode == 1) {
+        // Out of time gamemode-only HUD elements
+        hud["turbo_left"] = { value: null, dom: Dom.get('turbo_left_value') }
     }
 
     // Hide either the current lap time or the remaining time HUD meter according to the selected gamemode
@@ -286,10 +291,12 @@ function racer(gamemode) {
           }
 
           // Highlight turbo when in use
-          if (turboTriggered) {
-            Dom.addClassName('turbo_left', 'magenta');
-          } else {
-            Dom.removeClassName('turbo_left', 'magenta');
+          if (gamemode == 1) {
+              if (turboTriggered) {
+                Dom.addClassName('turbo_left', 'magenta');
+              } else {
+                Dom.removeClassName('turbo_left', 'magenta');
+              }
           }
 
           // Call game over if conditions are met
