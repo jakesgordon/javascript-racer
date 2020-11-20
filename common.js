@@ -107,6 +107,8 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
 
       Game.setKeyListener(options.keys);
 
+      Game.setDivListener(options.keys);
+
       var canvas = options.canvas,    // canvas render target is provided by caller
           update = options.update,    // method to update game logic is provided by caller
           render = options.render,    // method to render the game is provided by caller
@@ -157,6 +159,7 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
   //---------------------------------------------------------------------------
 
   setKeyListener: function(keys) {
+    // Setup listeners on keys to activate functions
     var onkey = function(keyCode, mode) {
       var n, k;
       for(n = 0 ; n < keys.length ; n++) {
@@ -171,6 +174,30 @@ var Game = {  // a modified version of the game loop from my previous boulderdas
     };
     Dom.on(document, 'keydown', function(ev) { onkey(ev.keyCode, 'down'); } );
     Dom.on(document, 'keyup',   function(ev) { onkey(ev.keyCode, 'up');   } );
+  },
+
+  //---------------------------------------------------------------------------
+
+  setDivListener: function(keys) {
+    // Setup listeners on div to activate functions (for mobile devices)
+    var n, k;
+    for(n = 0 ; n < keys.length ; n++) {
+        k = keys[n]
+        if (k.div) {
+            elt = document.getElementById(k.div);
+            if (elt) { // if the specified div element does not exist, just skip (probably the gamepad is not coded in the html)
+                if (k.mode == 'up') {
+                    elt.onmouseup = k.action;
+                    elt.addEventListener('mouseup', k.action);
+                    elt.addEventListener('touchend', k.action);
+                } else {
+                    elt.onmousedown = k.action; // fallback for old devices
+                    elt.addEventListener('mousedown', k.action);
+                    elt.addEventListener('touchstart', k.action);
+                }
+            }
+        }
+    }
   },
 
   //---------------------------------------------------------------------------
@@ -266,7 +293,7 @@ var Render = {
 
   //---------------------------------------------------------------------------
 
-  background: function(ctx, background, width, height, layer, rotation, offset) {
+  background: function(ctx, background, width, height, layer, rotation, offset, alpha) {
 
     rotation = rotation || 0;
     offset   = offset   || 0;
@@ -284,9 +311,15 @@ var Render = {
     var destW = Math.floor(width * (sourceW/imageW));
     var destH = height;
 
+    ctx.save(); // save the current drawing parameters
+    ctx.globalAlpha = alpha; // change alpha for next drawing
+
     ctx.drawImage(background, sourceX, sourceY, sourceW, sourceH, destX, destY, destW, destH);
     if (sourceW < imageW)
       ctx.drawImage(background, layer.x, sourceY, imageW-sourceW, sourceH, destW-1, destY, width-destW, destH);
+
+    // restore previous alpha and drawing parameters
+    ctx.restore()
   },
 
   //---------------------------------------------------------------------------
@@ -350,23 +383,28 @@ var KEY = {
   A:     65,
   D:     68,
   S:     83,
-  W:     87
+  W:     87,
+  SPACE: 32,
+  CTRL: 17,
 };
 
 var COLORS = {
-  SKY:  '#72D7EE',
-  TREE: '#005108',
-  FOG:  '#005108',
-  LIGHT:  { road: '#6B6B6B', grass: '#10AA10', rumble: '#555555', lane: '#CCCCCC'  },
-  DARK:   { road: '#696969', grass: '#009A00', rumble: '#BBBBBB'                   },
-  START:  { road: 'white',   grass: 'white',   rumble: 'white'                     },
-  FINISH: { road: 'black',   grass: 'black',   rumble: 'black'                     }
+  SKY:  'black',
+  TREE: 'cyan',
+  FOG:  'magenta',
+  LIGHT:  { road: 'black', grass: 'purple', rumble: 'cyan', lane: 'cyan'  },
+  DARK:   { road: 'black', grass: 'black', rumble: 'cyan'                   },
+  START:  { road: 'magenta',   grass: 'magenta',   rumble: 'magenta'                     },
+  FINISH: { road: 'cyan',   grass: 'cyan',   rumble: 'cyan'                     }
 };
 
 var BACKGROUND = {
   HILLS: { x:   5, y:   5, w: 1280, h: 480 },
   SKY:   { x:   5, y: 495, w: 1280, h: 480 },
-  TREES: { x:   5, y: 985, w: 1280, h: 480 }
+  TREES: { x:   5, y: 985, w: 1280, h: 480 },
+  HILLS2: { x:   5, y: 1475, w: 1280, h: 480 },
+  SKY2: { x:   5, y: 1965, w: 1280, h: 480 },
+  TREES2: { x:   5, y: 2445, w: 1280, h: 480 },
 };
 
 var SPRITES = {

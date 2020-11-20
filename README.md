@@ -1,21 +1,26 @@
-Javascript Pseudo 3D Racer
+Javascript-Racer
 ==========================
 
-An Outrun-style pseudo-3d racing game in HTML5 and Javascript
+An Outrun-style pseudo-3d racing game in HTML5 and pure Javascript (no JQuery), playable on desktop and mobile devices, and based on the awesome engine by [Jakes Gordon (Code InComplete)](https://github.com/jakesgordon/javascript-racer).
 
- * [play the game](http://codeincomplete.com/projects/racer/v4.final.html)
- * view the [source](https://github.com/jakesgordon/javascript-racer)
+![javascript-racer screenshot night time](https://github.com/lrq3000/javascript-racer/raw/master/screenshots/screenshot1.png)
+![javascript-racer screenshot daylight](https://github.com/lrq3000/javascript-racer/raw/master/screenshots/screenshot2.png)
+
+ * [play the game](https://lrq3000.github.io/javascript-racer/v5.game.html) ([or the original game](http://codeincomplete.com/projects/racer/v4.final.html))
+ * view the [source](https://github.com/lrq3000/javascript-racer) ([or the original engine source](https://github.com/jakesgordon/javascript-racer))
  * read about [how it works](http://codeincomplete.com/posts/2012/6/22/javascript_racer/)
 
-Incrementally built up in 4 parts:
+Incrementally built up in 5 parts:
 
- * play the [straight road demo](http://codeincomplete.com/projects/racer/v1.straight.html)
- * play the [curves demo](http://codeincomplete.com/projects/racer/v2.curves.html)
- * play the [hills demo](http://codeincomplete.com/projects/racer/v3.hills.html)
- * play the [final version](http://codeincomplete.com/projects/racer/v4.final.html)
+ * play the [straight road demo](https://lrq3000.github.io/javascript-racer/v1.straight.html)
+ * play the [curves demo](https://lrq3000.github.io/javascript-racer/v2.curves.html)
+ * play the [hills demo](https://lrq3000.github.io/javascript-racer/v3.hills.html)
+ * play the [final version - fastest lap game mode](https://lrq3000.github.io/javascript-racer/v4.final.html)
+ * play the [final game - out of time game mode](https://lrq3000.github.io/javascript-racer/v5.game.html)
 
 With detailed descriptions of how each part works:
 
+ * read [the intro post](http://codeincomplete.com/posts/2012/6/22/javascript_racer/)
  * read more about [v1 - straight roads](http://codeincomplete.com/posts/2012/6/23/javascript_racer_v1_straight)
  * read more about [v2 - curves](http://codeincomplete.com/posts/2012/6/24/javascript_racer_v2_curves/)
  * read more about [v3 - hills](http://codeincomplete.com/posts/2012/6/26/javascript_racer_v3_hills/)
@@ -35,8 +40,8 @@ Currently supported browsers include:
  * Chrome (v19+) works great, 60fps at high res... provided you dont have a bad GPU driver
  * IE9 - ok, 30fps at medium res... not great, but at least it works
 
-The current state of mobile browser performance is pretty dismal. Dont expect this to be playable on
-any mobile device.
+The current state of mobile browser performance is better than before but still just barely enough to run the game.
+Optimizing would surely help for mobile support.
 
 >> _NOTE: I havent actually spent anytime optimizing for performance yet. So it might be possible to
    make it play well on older browsers, but that's not really what this project is about._
@@ -62,8 +67,8 @@ really be considered just how to get started with a pseudo-3d racing game.
 If we were to try to turn it into a real game we would have to consider:
 
  * car sound fx
- * better synchronized music
- * full screen mode
+ * synchronized music change
+ * enhance full screen mode to include the HUD
  * HUD fx (flash on fastest lap, confetti, color coded speedometer, etc)
  * more accurate sprite collision
  * better car AI (steering, braking etc)
@@ -79,13 +84,14 @@ If we were to try to turn it into a real game we would have to consider:
  * multiple stages, different maps
  * a lap map, with current position indicator
  * road splits and joins
- * day/night cycle
+ * cars coming in opposite direction
  * weather effects
  * tunnels, bridges, clouds, walls, buildings
  * city, desert, ocean
  * add city of seattle and space needle to background
  * 'bad guys' - add some competetor drivers to race against as well as the 'traffic'
- * different game modes - fastest lap, 1-on-1 racing, collect coins ? shoot bad guys ?
+ * different game modes - 1-on-1 racing, collect coins ? shoot bad guys ?
+ * a nice retro intro (using [codef](https://github.com/N0NameN0/CODEF) or [phaser](http://phaser.io/examples/v2/demoscene/atari-intro)?)
  * a whole lot of gameplay tuning
  * ...
  * ...
@@ -99,13 +105,4 @@ Related Links
 License
 =======
 
-[MIT](http://en.wikipedia.org/wiki/MIT_License) license.
-
->> NOTE: the music tracks included in this project are royalty free resources paid for and licensed
-from [Lucky Lion Studios](http://luckylionstudios.com/). They are licensed ONLY for use in this
-project and should not be reproduced.
-
->> NOTE: the sprite graphics are placeholder graphics [borrowed](http://pixel.garoux.net/game/44) from the old
-genesis version of outrun and used here as teaching examples. If there are any pixel artists out there who want to 
-provide original art to turn this into a real game please get in touch!
-
+[MIT](http://en.wikipedia.org/wiki/MIT_License) license including resources, except for some resources that are under creative commons or public domain (see thanks.txt). In any case, all assets are under permissive licenses allowing reuse and modification including for commercial purpose.
