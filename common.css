@@ -3,7 +3,7 @@
 /* common styles used for v1 through v4 */
 /****************************************/
 
-body          { font-family: Arial, Helvetica, sans-serif; }
+body          { font-family: serif; }
 #stats        { border: 2px solid black; }
 #controls     { width: 28em; float: left; padding: 1em; font-size: 0.7em; }
 #controls th  { text-align: right; vertical-align: middle; }
